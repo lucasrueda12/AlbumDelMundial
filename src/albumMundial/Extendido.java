@@ -15,7 +15,7 @@ public class Extendido extends Tradicional{
 	}
 	
 	@Override
-	public String darPremio(int dni) {
+	public String darPremio() {
 //		Falta arrojar las excepciones de si el participante no está registrado
 //		 o si no completó el album.
 		return "Te ganaste una pelota y un viaje!";

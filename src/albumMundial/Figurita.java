@@ -1,7 +1,7 @@
 package albumMundial;
 
 public class Figurita {
-	private static Integer cont;
+	private static Integer cont=0;
 	private Integer _id;
 	private String _tipo;
 	private Integer _valorBase;

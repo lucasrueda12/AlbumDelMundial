@@ -1,24 +1,24 @@
 package albumMundial;
 
-public class Web extends AlbumDelMundial {
+public class Web extends Album {
 
-	private Integer _codigoProm;
+	private boolean _codigoProm;
 
 	public Web() {
 	}
 
 	public Web(String tipo, Integer id) {
 		super(tipo, id);
-		// Falta ver que hacemos con el codigoPromocional;
+		_codigoProm = false;
 	}
 
 	@Override
-	public String darPremio(int dni) {
-
-//		Falta arrojar las excepciones de si el participante no está registrado
-//		 o si no completó el album.
-
+	public String darPremio() {
 		return "Te ganaste una camiseta oficial de la selección!";
+	}
+	
+	public boolean usoElCodigo() {
+		return _codigoProm;
 	}
 
 }

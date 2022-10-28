@@ -1,6 +1,6 @@
 package albumMundial;
 
-public class Tradicional extends AlbumDelMundial {
+public class Tradicional extends Album {
 
 	private Integer _numeroSorteo;
 
@@ -14,7 +14,7 @@ public class Tradicional extends AlbumDelMundial {
 	}
 
 	@Override
-	public String darPremio(int dni) {
+	public String darPremio() {
 //		Falta arrojar las excepciones de si el participante no está registrado
 //		 o si no completó el album.
 		return "Te ganaste una pelota!";
