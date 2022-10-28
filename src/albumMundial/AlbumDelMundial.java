@@ -1,12 +1,21 @@
 package albumMundial;
 
 import java.util.List;
+import java.util.Map;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
-	
-	
-	public AlbumDelMundial() {
-		// TODO Auto-generated constructor stub
+
+	private String _tipo;
+	private Integer _id;
+	private Map<String, Pais> _equipos;
+
+	public AlbumDelMundial() { // Sobrecarga.
+	}
+
+	public AlbumDelMundial(String tipo, Integer id) {
+		_tipo = tipo;
+		_id = id; // Es igual al dni del participante que lo compra.
+
 	}
 
 	@Override
@@ -18,19 +27,19 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public void comprarFiguritas(int dni) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void comprarFiguritasTop10(int dni) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void comprarFiguritasConCodigoPromocional(int dni) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
