@@ -16,8 +16,13 @@ public class Fabrica {
 	private String[] listadoDeMundialesTop10;
 	private Map<String, String[]> balonYPaisPorMundialTop10;
 	private Map<String, Integer> ranking;
+	
+	private Map<Integer, Figurita> _figuritasTradicionales;
+	private Map<Integer, Ftop10> _figusTop10;
 
 	Fabrica() {
+		_figuritasTradicionales = generarFiguritasTradicionales();
+		_figusTop10 = generarFigusTop10();
 		random = new Random(System.currentTimeMillis());
 		lugaresPorPais = 12;
 		paisesParticipantes = generarPaisesClasificados();
@@ -26,6 +31,32 @@ public class Fabrica {
 		ranking = generarRanking();
 		premiosInstantaneos = generarPremiosParaSorteoInstantaneo();
 	}
+
+	private Map<Integer, Ftop10> generarFigusTop10() {
+		Map<Integer, Ftop10> ret = new HashMap<>();
+		for(int j=0; j<listadoDeMundialesTop10.length; j++) {
+			String sede = listadoDeMundialesTop10[j];
+			String[] sarr = balonYPaisPorMundialTop10.get(listadoDeMundialesTop10[j]);
+			Ftop10 x = new Ftop10(sarr[0], sede , "oro");
+			Ftop10 x2 = new Ftop10(sarr[1], sede , "plata");
+			ret.put(x.get_id(), x);
+			ret.put(x2.get_id(), x2);
+		}
+		return ret;
+	}
+
+	private Map<Integer, Figurita> generarFiguritasTradicionales() {
+		Map<Integer, Figurita> ret= new HashMap<>();
+		for(int i=0; i<paisesParticipantes.length; i++) {
+			for(int j=1; j<13; j++) {
+				Figurita x= new Figurita("tradicional", j, paisesParticipantes[i]);
+				ret.put(x.get_id(), x);
+			}
+		}
+		return ret;
+	}
+	
+	
 
 	////////////////////////////////////////////////////////////////////////
 	// NOTA: Deben implementar los siguientes metodos segun su modelo //
@@ -36,9 +67,39 @@ public class Fabrica {
 	// tendrá una figurita en particula. //
 	////////////////////////////////////////////////////////////////////////
 
+	
+	
 	Album crearAlbumWeb(int id) { 
 		Web album = new Web("web", id);		
 		return album;
+	}
+
+	public Random getRandom() {
+		return random;
+	}
+
+	public String[] getPremiosInstantaneos() {
+		return premiosInstantaneos;
+	}
+
+	public String[] getPaisesParticipantes() {
+		return paisesParticipantes;
+	}
+
+	public int getLugaresPorPais() {
+		return lugaresPorPais;
+	}
+
+	public String[] getListadoDeMundialesTop10() {
+		return listadoDeMundialesTop10;
+	}
+
+	public Map<String, String[]> getBalonYPaisPorMundialTop10() {
+		return balonYPaisPorMundialTop10;
+	}
+
+	public Map<String, Integer> getRanking() {
+		return ranking;
 	}
 
 	Album crearAlbumExtendido(int id) { 
@@ -53,13 +114,19 @@ public class Fabrica {
 	}
 
 	List<Figurita> generarSobre(int cantFigus) {
-		
-		throw new RuntimeException("A Implementar");
-		
+		List<Figurita> fList= new ArrayList<>();
+		for(int i=0; i<cantFigus; i++) {
+			fList.add(_figuritasTradicionales.get(random.nextInt(_figuritasTradicionales.size()))); 
+		}
+		return fList;
 	}
 
 	List<Figurita> generarSobreTop10(int cantFigus) {
-		throw new RuntimeException("A Implementar");
+		List<Figurita> topList= new ArrayList<>();
+		for(int i=0; i<cantFigus; i++) {
+			topList.add(_figusTop10.get(random.nextInt(_figusTop10.size()))); 
+		}
+		return topList;
 	}
 	
 

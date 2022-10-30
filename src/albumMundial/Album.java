@@ -12,7 +12,7 @@ public class Album {
 	}
 	
 	public Album(String tipo, int id) {
-		_tipo = tipo;
+		_tipo = tipo; // tipo lo usamos para saber que album vamos a construir, y guardamos esta referencia
 		_id = id; // Es igual al dni del participante que lo compra.
 
 	}

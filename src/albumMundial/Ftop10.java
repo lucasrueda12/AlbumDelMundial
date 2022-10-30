@@ -1,18 +1,22 @@
 package albumMundial;
 
-public class Ftop10 extends Figurita {
+import java.util.Random;
 
+public class Ftop10 extends Figurita {
+	
 	private String _paisSede;
-	private Integer _anio;
 	private String _balon;
 
-	public Ftop10(String nombreJugador, String nombrePais, String paisSede, Integer anio, String balon) {
-		super("Top10", nombreJugador, nombrePais);
-
+	public Ftop10( String nombrePais, String paisSede, String balon) {
+		super("Top10", generarNum() , nombrePais);
 		_paisSede = paisSede;
-		_anio = anio;
 		_balon = balon;
+	}
 
+	private static int generarNum() {
+		Random r = new Random();
+		int r2 = r.nextInt(12);
+		return r2 +1;
 	}
 
 }

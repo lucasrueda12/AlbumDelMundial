@@ -1,5 +1,6 @@
 package albumMundial;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Pais {
@@ -11,5 +12,6 @@ public class Pais {
 	public Pais(String nombre, Integer ranking) {
 		_nombre = nombre;
 		_ranking = ranking;
+		_figuritasDeJugadores = new HashMap<>();
 	}
 }

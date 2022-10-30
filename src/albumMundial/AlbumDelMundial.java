@@ -5,15 +5,15 @@ import java.util.Map;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
 
-	private Map<Integer, Integer> _albumesComprados;
+	private Map<Integer, Integer> _albumesComprados;  // no se para q vamos a usar esto tampoco, si para eso vemos el listado de participantes
 	private Map<String, Pais> _paisesParticipantes;
-	private Map<Integer, Figurita> _figuritas;
 	private Map<Integer, Participante> _participantes;
 	private Map<Integer, Figurita> _solicitudesDeIntercambio; // Vamo a ver si la usamos.
 	private Fabrica fabrica;
 
 	public AlbumDelMundial() { // Sobrecarga.
 		fabrica = new Fabrica();
+		
 	}
 
 // Se podran cambiar los int por Integer ¿¿
@@ -22,10 +22,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	public int registrarParticipante(int dni, String nombre, String tipoAlbum) {
 
 		if (_participantes.containsKey(dni)) {
-			throw new RuntimeException("Usted ya se encuentra registrado");
+			throw new RuntimeException("Participante ya se encuentra registrado");
 
 		} else if (!tipoAlbum.equals("web") || !tipoAlbum.equals("tradicional") || !tipoAlbum.equals("extendido")) {
-			throw new RuntimeException("Usted ha ingresado un tipo de álbum incorrecto");
+			throw new RuntimeException("Ha ingresado un tipo de álbum incorrecto");
 		}
 
 		Album album;
@@ -54,7 +54,11 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public void comprarFiguritas(int dni) {
-
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}
+		Participante p = _participantes.get(dni);
+		p.agregarSobreAColeccion(fabrica.generarSobre(4));
 	}
 
 	@Override
@@ -83,7 +87,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public String aplicarSorteoInstantaneo(int dni) {
-		// TODO Auto-generated method stub
+		if(!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}
+		
 		return null;
 	}
 
