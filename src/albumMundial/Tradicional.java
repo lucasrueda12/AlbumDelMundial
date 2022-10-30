@@ -12,8 +12,6 @@ public class Tradicional extends Album {
 		// Falta definir como declaramos el numero del sorteo;
 		_solicitoSorteo = false;
 	}
-	
-	
 
 	public boolean solicitoSorteo() {
 		return _solicitoSorteo;

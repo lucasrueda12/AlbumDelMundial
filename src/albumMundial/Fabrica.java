@@ -69,38 +69,11 @@ public class Fabrica {
 
 	
 	
-	Album crearAlbumWeb(int id) { 
+	Web crearAlbumWeb(int id) { 
 		Web album = new Web("web", id);		
 		return album;
 	}
 
-	public Random getRandom() {
-		return random;
-	}
-
-	public String[] getPremiosInstantaneos() {
-		return premiosInstantaneos;
-	}
-
-	public String[] getPaisesParticipantes() {
-		return paisesParticipantes;
-	}
-
-	public int getLugaresPorPais() {
-		return lugaresPorPais;
-	}
-
-	public String[] getListadoDeMundialesTop10() {
-		return listadoDeMundialesTop10;
-	}
-
-	public Map<String, String[]> getBalonYPaisPorMundialTop10() {
-		return balonYPaisPorMundialTop10;
-	}
-
-	public Map<String, Integer> getRanking() {
-		return ranking;
-	}
 
 	Album crearAlbumExtendido(int id) { 
 		Extendido album = new Extendido("extendido", id);
@@ -112,9 +85,36 @@ public class Fabrica {
 		return album;
 		
 	}
+		public Random getRandom() {
+			return random;
+		}
+		
+		public String[] getPremiosInstantaneos() {
+			return premiosInstantaneos;
+		}
+		
+		public String[] getPaisesParticipantes() {
+			return paisesParticipantes;
+		}
+		
+		public int getLugaresPorPais() {
+			return lugaresPorPais;
+		}
+		
+		public String[] getListadoDeMundialesTop10() {
+			return listadoDeMundialesTop10;
+		}
+		
+		public Map<String, String[]> getBalonYPaisPorMundialTop10() {
+			return balonYPaisPorMundialTop10;
+		}
+		
+		public Map<String, Integer> getRanking() {
+			return ranking;
+		}
 
 	List<Figurita> generarSobre(int cantFigus) {
-		List<Figurita> fList= new ArrayList<>();
+		List<Figurita> fList = new ArrayList<>();
 		for(int i=0; i<cantFigus; i++) {
 			fList.add(_figuritasTradicionales.get(random.nextInt(_figuritasTradicionales.size()))); 
 		}

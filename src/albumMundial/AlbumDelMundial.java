@@ -6,7 +6,8 @@ import java.util.Map;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
 
-	private Map<Integer, Integer> _albumesComprados;  // no se para q vamos a usar esto tampoco, si para eso vemos el listado de participantes
+	private Map<Integer, Integer> _albumesComprados; // no se para q vamos a usar esto tampoco, si para eso vemos el
+														// listado de participantes
 	private Map<String, Pais> _paisesParticipantes;
 	private Map<Integer, Participante> _participantes;
 	private Map<Integer, Figurita> _solicitudesDeIntercambio; // Vamo a ver si la usamos.
@@ -14,7 +15,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	public AlbumDelMundial() { // Sobrecarga.
 		fabrica = new Fabrica();
-		
+
 	}
 
 // Se podran cambiar los int por Integer ¿¿
@@ -25,16 +26,16 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (_participantes.containsKey(dni)) {
 			throw new RuntimeException("Participante ya se encuentra registrado");
 
-		} else if (!tipoAlbum.equals("web") || !tipoAlbum.equals("tradicional") || !tipoAlbum.equals("extendido")) {
+		} else if (!tipoAlbum.equals("Web") || !tipoAlbum.equals("Tradicional") || !tipoAlbum.equals("Extendido")) {
 			throw new RuntimeException("Ha ingresado un tipo de álbum incorrecto");
 		}
 
 		Album album;
 
-		if (tipoAlbum.equals("web")) {
+		if (tipoAlbum.equals("Web")) {
 			album = fabrica.crearAlbumWeb(dni);
 
-		} else if (tipoAlbum.equals("tradicional")) {
+		} else if (tipoAlbum.equals("Tradicional")) {
 
 			album = fabrica.crearAlbumTradicional(dni);
 		} else {
@@ -48,7 +49,9 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		return 0;
 	}
 
-	private void registrarParticipante(int dni, Participante participante) { //No sé si es necesario este método pero lo hice porque pensaba que el otro quedaba muy cargado xd
+	private void registrarParticipante(int dni, Participante participante) { // No sé si es necesario este método pero
+																				// lo hice porque pensaba que el otro
+																				// quedaba muy cargado xd
 		_participantes.put(participante.getDni(), participante);
 		_albumesComprados.put(dni, dni);
 	}
@@ -58,19 +61,43 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 		}
-		Participante p = _participantes.get(dni);
-		p.agregarSobreAColeccion((ArrayList<Figurita>)fabrica.generarSobre(4));
+		Participante participante = _participantes.get(dni);
+
+		participante.agregarSobreAColeccion(fabrica.generarSobre(4));
 	}
 
 	@Override
 	public void comprarFiguritasTop10(int dni) {
-		// TODO Auto-generated method stub
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("Top10")) {
+			throw new RuntimeException("El participante no cuenta con un Álbum Extendido");
+		}
+
+		Participante participante = _participantes.get(dni);
+
+		participante.agregarSobreAColeccion(fabrica.generarSobreTop10(4));
 
 	}
 
 	@Override
 	public void comprarFiguritasConCodigoPromocional(int dni) {
-		// TODO Auto-generated method stub
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("Web")) {
+			throw new RuntimeException("El participante no tiene un Álbum Web");
+
+		} else if (!_participantes.get(dni).tieneCodigoDisponible()) {
+			throw new RuntimeException("El participante no tiene disponible el código promocional");
+
+		}
+
+		Participante participante = _participantes.get(dni);
+
+		participante.usarCodigo();
+		participante.agregarSobreAColeccion(fabrica.generarSobre(4));
 
 	}
 
@@ -88,10 +115,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public String aplicarSorteoInstantaneo(int dni) {
-		if(!_participantes.containsKey(dni)) {
+		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 		}
-		
+
 		return null;
 	}
 
