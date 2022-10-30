@@ -11,7 +11,7 @@ public interface IAlbumDelMundial {
 	 * lanzar una excepcion.
 	 */
 	int registrarParticipante(int dni, String nombre, String tipoAlbum);
-
+	
 	/**
 	 * Se generan 4 figuritas al azar y se asocia al participante correspondiente
 	 * identificado por dni

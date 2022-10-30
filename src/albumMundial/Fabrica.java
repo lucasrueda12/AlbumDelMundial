@@ -36,28 +36,32 @@ public class Fabrica {
 	// tendrá una figurita en particula. //
 	////////////////////////////////////////////////////////////////////////
 
-	Album crearAlbumWeb() { // Q verga va aca¡¡?¡?¡?¡ help
-		Web albumWeb = new Web();
-		throw new RuntimeException("A Implementar");
+	Album crearAlbumWeb(int id) { 
+		Web album = new Web("web", id);		
+		return album;
 	}
 
-	Album crearAlbumExtendido() { // Q verga va aca¡¡?¡?¡?¡ help
-		Extendido albumExtend = new Extendido();
-		throw new RuntimeException("A Implementar");
+	Album crearAlbumExtendido(int id) { 
+		Extendido album = new Extendido("extendido", id);
+		return album;
 	}
 
-	Album crearAlbumTradicional() { // Q verga va aca¡¡?¡?¡?¡ help
-		Tradicional albumTradicional = new Tradicional();
-		throw new RuntimeException("A Implementar");
+	Album crearAlbumTradicional(int id) { 
+		Tradicional album = new Tradicional("tradicional", id);
+		return album;
+		
 	}
 
 	List<Figurita> generarSobre(int cantFigus) {
+		
 		throw new RuntimeException("A Implementar");
+		
 	}
 
 	List<Figurita> generarSobreTop10(int cantFigus) {
 		throw new RuntimeException("A Implementar");
 	}
+	
 
 	///////////////////////////////////////////////////////
 	///////////// METODOS FACILITADOS POR LA CATEDRA //////
@@ -99,6 +103,8 @@ public class Fabrica {
 		ret.put("Rusia '18", new String[] { "Croacia", "Bélgica" });
 		return ret;
 	}
+	
+	
 
 	private Map<String, Integer> generarRanking() {
 		Map<String, Integer> ret = new HashMap<>();

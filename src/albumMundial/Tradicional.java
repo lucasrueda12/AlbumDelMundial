@@ -2,12 +2,12 @@ package albumMundial;
 
 public class Tradicional extends Album {
 
-	private Integer _numeroSorteo;
+	private int _numeroSorteo;
 
 	public Tradicional() {
 	}
 
-	public Tradicional(String tipo, Integer id) {
+	public Tradicional(String tipo, int id) {
 		super(tipo, id);
 		// Falta definir como declaramos el numero del sorteo;
 
