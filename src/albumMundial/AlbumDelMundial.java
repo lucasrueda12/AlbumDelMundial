@@ -1,5 +1,6 @@
 package albumMundial;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			throw new RuntimeException("No se encuentra registrado");
 		}
 		Participante p = _participantes.get(dni);
-		p.agregarSobreAColeccion(fabrica.generarSobre(4));
+		p.agregarSobreAColeccion((ArrayList<Figurita>)fabrica.generarSobre(4));
 	}
 
 	@Override
