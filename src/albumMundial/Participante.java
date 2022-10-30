@@ -20,4 +20,10 @@ public class Participante {
 		return _dni;
 	}
 	
+	public void agregarSobreAColeccion (ArrayList <Figurita> sobre) {
+		
+		for(Figurita figurita : sobre) {
+			_coleccionFiguritas.add(figurita);
+		}
+	}
 }
