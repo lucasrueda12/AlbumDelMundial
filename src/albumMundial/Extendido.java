@@ -11,8 +11,8 @@ public class Extendido extends Tradicional{
 	public Extendido() {	
 	}
 
-	public Extendido(String tipo, int id) {
-		super(tipo, id);
+	public Extendido(String tipo) {
+		super(tipo);
 		 
 	}
 	

@@ -7,8 +7,8 @@ public class Tradicional extends Album {
 	public Tradicional() {
 	}
 
-	public Tradicional(String tipo, int id) {
-		super(tipo, id);
+	public Tradicional(String tipo) {
+		super(tipo);
 		// Falta definir como declaramos el numero del sorteo;
 		_solicitoSorteo = false;
 	}

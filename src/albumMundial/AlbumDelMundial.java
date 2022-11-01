@@ -33,13 +33,13 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		Album album;
 
 		if (tipoAlbum.equals("Web")) {
-			album = fabrica.crearAlbumWeb(dni);
+			album = fabrica.crearAlbumWeb();
 
 		} else if (tipoAlbum.equals("Tradicional")) {
 
-			album = fabrica.crearAlbumTradicional(dni);
+			album = fabrica.crearAlbumTradicional();
 		} else {
-			album = fabrica.crearAlbumExtendido(dni);
+			album = fabrica.crearAlbumExtendido();
 		}
 
 		Participante participante = new Participante(dni, nombre, album);

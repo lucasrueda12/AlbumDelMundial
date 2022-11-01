@@ -4,8 +4,8 @@ public class Web extends Album {
 
 	private boolean _codigoProm;
 
-	public Web(String tipo, Integer id) {
-		super(tipo, id);
+	public Web(String tipo) {
+		super(tipo);
 		_codigoProm = true;
 	}
 

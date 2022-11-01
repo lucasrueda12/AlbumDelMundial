@@ -6,7 +6,6 @@ public class Participante {
 
 	private Integer _dni;
 	private String _nombre;
-	private String tipo;
 	private List<Figurita> _coleccionFiguritas;
 	private Album _album;
 
@@ -37,6 +36,10 @@ public class Participante {
 	}
 
 	public void usarCodigo() {
+		if(!(_album instanceof Web)) {
+			throw new RuntimeException("No es posible utilizar este método. Participante no tiene un Álbum Web");
+		}
+		
 		Web web = (Web) _album;
 		web.usarCodigo();
 	}
