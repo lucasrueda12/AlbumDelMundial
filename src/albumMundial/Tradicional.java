@@ -28,4 +28,5 @@ public class Tradicional extends Album {
 		return "Te ganaste una pelota!";
 	}
 
+
 }

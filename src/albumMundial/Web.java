@@ -18,7 +18,7 @@ public class Web extends Album {
 		_codigoProm = false;
 	}
 
-	@Override
+	
 	public boolean tieneCodigoDisponible() {
 		return _codigoProm;
 	}

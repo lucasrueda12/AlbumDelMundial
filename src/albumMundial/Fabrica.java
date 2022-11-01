@@ -16,13 +16,19 @@ public class Fabrica {
 	private String[] listadoDeMundialesTop10;
 	private Map<String, String[]> balonYPaisPorMundialTop10;
 	private Map<String, Integer> ranking;
-	
+
 	private Map<Integer, Figurita> _figuritasTradicionales;
 	private Map<Integer, Ftop10> _figusTop10;
+	private Map<String, Pais> _paises;
 
 	Fabrica() {
+
+		// instancias nuestras
 //		_figuritasTradicionales = generarFiguritasTradicionales();
 //		_figusTop10 = generarFigusTop10();
+		_paises = generarPaises();
+		
+		// instancias pre-armadas
 		random = new Random(System.currentTimeMillis());
 		lugaresPorPais = 12;
 		paisesParticipantes = generarPaisesClasificados();
@@ -30,6 +36,19 @@ public class Fabrica {
 		balonYPaisPorMundialTop10 = generarPaisesPorMundial();
 		ranking = generarRanking();
 		premiosInstantaneos = generarPremiosParaSorteoInstantaneo();
+	}
+	
+	// GENERAR PAISES
+	private Map<String, Pais> generarPaises() {
+		Map<String, Pais> ret = new HashMap<>();
+		for (String sp : paisesParticipantes) {
+			Pais x = new Pais(sp, ranking.get(sp));
+			ret.put(sp ,x);
+		}
+		return ret;
+	}
+	public Map<String, Pais> get_paises(){
+		return _paises;
 	}
 
 //	private Map<Integer, Ftop10> generarFigusTop10() {
@@ -55,10 +74,6 @@ public class Fabrica {
 //		}
 //		return ret;
 //	}
-	
-
-	
-	
 
 	////////////////////////////////////////////////////////////////////////
 	// NOTA: Deben implementar los siguientes metodos segun su modelo //
@@ -70,24 +85,30 @@ public class Fabrica {
 	////////////////////////////////////////////////////////////////////////
 
 	
+	// GENERAR ALBUMS
+	Web crearAlbumWeb() {
+		return new Web("web");
+
+	}
+
+	Album crearAlbumExtendido() {
+		return new Extendido("extendido");
+
+	}
+
+	Album crearAlbumTradicional() {
+		return new Tradicional("tradicional");
+
+	}
 	
-	Web crearAlbumWeb() { 
-		return new Web("web");		
-		
+	// SORTEO
+	
+	public String sortearPremio(int x) {
+		return premiosInstantaneos[x];
 	}
-
-
-	Album crearAlbumExtendido() { 
-		return  new Extendido("extendido");
-		
-	}
-
-	Album crearAlbumTradicional() { 
-		return  new Tradicional("tradicional");
-		
-		
-	}
-		
+	
+	
+	// GENERAR SOBRES DE FIGURITAS
 //
 //	List<Figurita> generarSobre(int cantFigus) {
 //		List<Figurita> fList = new ArrayList<>();
@@ -96,21 +117,23 @@ public class Fabrica {
 //		}
 //		return fList;
 //	}
-		
-		List<Figurita> generarSobre(int cantFigus) {
-			List<Figurita> sobre = new ArrayList <Figurita>();
-				
-			for(int i=0; i<cantFigus; i++) {
-				int numJugador = random.nextInt(12); //asigna un numero de jugador random
-				String nombrePais = paisesParticipantes[random.nextInt(paisesParticipantes.length)]; //asigna el pais aleatoriamente desde 0 hasta el length-1 de paises
-				Figurita figurita = new Figurita("Tradicional", numJugador, nombrePais);	
-				sobre.add(figurita);
-			}
-			
-			return sobre;
+
+	List<Figurita> generarSobre(int cantFigus) {
+		List<Figurita> sobre = new ArrayList<Figurita>();
+
+		for (int i = 0; i < cantFigus; i++) {
+			int numJugador = random.nextInt(12); // asigna un numero de jugador random
+			String nombrePais = paisesParticipantes[random.nextInt(paisesParticipantes.length)]; // asigna el pais
+																									// aleatoriamente
+																									// desde 0 hasta el
+																									// length-1 de
+																									// paises
+			Figurita figurita = new Figurita("Tradicional", numJugador, nombrePais);
+			sobre.add(figurita);
 		}
-	
-	
+
+		return sobre;
+	}
 
 //	List<Figurita> generarSobreTop10(int cantFigus) {
 //		List<Figurita> topList= new ArrayList<>();
@@ -119,31 +142,43 @@ public class Fabrica {
 //		}
 //		return topList;
 //	}
-	
+
 	List<Figurita> generarSobreTop10(int cantFigus) {
-		List<Figurita> sobreTop10 = new ArrayList <Figurita>();
-		
-		for(int i=0; i<cantFigus; i++) {
-			int numJugador = random.nextInt(12); //asigna un numero de jugador random
-			String paisSede = listadoDeMundialesTop10[random.nextInt(listadoDeMundialesTop10.length)]; //Asigna un pais sede random desde 0 hasta el length-1 de mundialesTop10;
-			String nombrePais = balonYPaisPorMundialTop10.get(paisSede)[random.nextInt(2)]; //Segun el pais sede que se asignó anteriormente,aleatoriamente elije 1 de los 2 paises que contienen en el array de string.
+		List<Figurita> sobreTop10 = new ArrayList<Figurita>();
+
+		for (int i = 0; i < cantFigus; i++) {
+			int numJugador = random.nextInt(12); // asigna un numero de jugador random
+			String paisSede = listadoDeMundialesTop10[random.nextInt(listadoDeMundialesTop10.length)]; // Asigna un pais
+																										// sede random
+																										// desde 0 hasta
+																										// el length-1
+																										// de
+																										// mundialesTop10;
+			String nombrePais = balonYPaisPorMundialTop10.get(paisSede)[random.nextInt(2)]; // Segun el pais sede que se
+																							// asignó
+																							// anteriormente,aleatoriamente
+																							// elije 1 de los 2 paises
+																							// que contienen en el array
+																							// de string.
 			String balon;
-			
-			if(nombrePais.equals(balonYPaisPorMundialTop10.get(paisSede)[0])) { //Se verifica si el nombrePais que se asigno antes aleatoriamente se encuentra en la posicion 0 o 1. 
-				balon = "oro"; //si esta en la pos 0 significa que es el balon de oro.
-			}else {
-				
-				balon = "plata"; //sino le asigna el balon de plata.
+
+			if (nombrePais.equals(balonYPaisPorMundialTop10.get(paisSede)[0])) { // Se verifica si el nombrePais que se
+																					// asigno antes aleatoriamente se
+																					// encuentra en la posicion 0 o 1.
+				balon = "oro"; // si esta en la pos 0 significa que es el balon de oro.
+			} else {
+
+				balon = "plata"; // sino le asigna el balon de plata.
 			}
-			
-			Ftop10 figurita = new Ftop10(nombrePais, numJugador, paisSede, balon);	//Se crea la figurita con todos los datos random.
-			
+
+			Ftop10 figurita = new Ftop10(nombrePais, numJugador, paisSede, balon); // Se crea la figurita con todos los
+																					// datos random.
+
 			sobreTop10.add(figurita);
 		}
-		
+
 		return sobreTop10;
 	}
-	
 
 	///////////////////////////////////////////////////////
 	///////////// METODOS FACILITADOS POR LA CATEDRA //////
@@ -185,8 +220,6 @@ public class Fabrica {
 		ret.put("Rusia '18", new String[] { "Croacia", "Bélgica" });
 		return ret;
 	}
-	
-	
 
 	private Map<String, Integer> generarRanking() {
 		Map<String, Integer> ret = new HashMap<>();

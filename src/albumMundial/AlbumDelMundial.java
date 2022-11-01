@@ -3,11 +3,13 @@ package albumMundial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
-
-	private Map<Integer, Integer> _albumesComprados; // no se para q vamos a usar esto tampoco, si para eso vemos el
-														// listado de participantes
+	
+	private Random random;
+	
+	private Map<Integer, Integer> _albumesComprados; // no se para q vamos a usar esto tampoco, si para eso vemos el map de participantes												// listado de participantes
 	private Map<String, Pais> _paisesParticipantes;
 	private Map<Integer, Participante> _participantes;
 	private Map<Integer, Figurita> _solicitudesDeIntercambio; // Vamo a ver si la usamos.
@@ -29,6 +31,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		} else if (!tipoAlbum.equals("Web") || !tipoAlbum.equals("Tradicional") || !tipoAlbum.equals("Extendido")) {
 			throw new RuntimeException("Ha ingresado un tipo de álbum incorrecto");
 		}
+		if(dni <0) {
+			throw new RuntimeException("Ha ingresado un tipo de dni erroneo");
+		}
+		if(nombre == null) throw new RuntimeException("Ha ingresado un nombre invalido");
 
 		Album album;
 
@@ -46,12 +52,12 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 		registrarParticipante(dni, participante);
 
-		return 0;
+		return dni;
 	}
 
 	private void registrarParticipante(int dni, Participante participante) { // No sé si es necesario este método pero
-																				// lo hice porque pensaba que el otro
-																				// quedaba muy cargado xd
+																			// lo hice porque pensaba que el otro
+																			// quedaba muy cargado xd
 		_participantes.put(participante.getDni(), participante);
 		_albumesComprados.put(dni, dni);
 	}
@@ -71,7 +77,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("Top10")) {
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("extendido")) {
 			throw new RuntimeException("El participante no cuenta con un Álbum Extendido");
 		}
 
@@ -86,7 +92,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("Web")) {
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("web")) {  // cuidado con las mayusculas, para el tipo de album
 			throw new RuntimeException("El participante no tiene un Álbum Web");
 
 		} else if (!_participantes.get(dni).tieneCodigoDisponible()) {
@@ -103,28 +109,56 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public List<String> pegarFiguritas(int dni) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");			
+		}
+		
+		Participante participante = _participantes.get(dni);
+		List<String> pegadas = new ArrayList<>();
+		pegadas = participante.pegarFiguritas();
+		
+		if(pegadas.size() == 0) {
+			pegadas.add("No se pego ninguna figurita");
+		}
+		return pegadas;
 	}
 
 	@Override
 	public boolean llenoAlbum(int dni) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");			
+		}
+		
+		Participante participante = _participantes.get(dni);
+		
+		return participante.albumCompleto();
 	}
 
 	@Override
 	public String aplicarSorteoInstantaneo(int dni) {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
-		}
 
-		return null;
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("tradicional")) {  // cuidado con las mayusculas, para el tipo de album
+			throw new RuntimeException("El participante no tiene un Álbum Web");
+
+		} else if (!_participantes.get(dni).tieneSorteoDisponible()) {
+			throw new RuntimeException("El participante no tiene disponible el código promocional");
+
+		}
+		
+		Participante participante= _participantes.get(dni);
+		int x = random.nextInt(4);
+		participante.usarSorteo();
+		return fabrica.sortearPremio(x);
 	}
 
 	@Override
 	public int buscarFiguritaRepetida(int dni) {
-		// TODO Auto-generated method stub
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}
+		
 		return 0;
 	}
 
