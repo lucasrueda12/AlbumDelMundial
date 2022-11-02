@@ -66,4 +66,15 @@ public class Album {
 		}
 		return ret;
 	}
+
+	public Map<String, Pais> get_equipos() {
+		return _equipos;
+	}
+
+	public boolean completoPaisX(String nombrePais) {
+		if(!_equipos.containsKey(nombrePais)) {
+			return false;
+		}
+		return _equipos.get(nombrePais).estaCompletoP();
+	}
 }

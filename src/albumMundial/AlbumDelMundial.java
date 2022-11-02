@@ -210,8 +210,16 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public List<String> participantesQueCompletaronElPais(String nombrePais) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> completaronPais= new ArrayList<>();
+		for(Map.Entry<Integer, Participante> p: _participantes.entrySet()) {
+			if(p.getValue().completoPais(nombrePais)) {
+				completaronPais.add(p.getValue().toString());
+			}
+		}
+		if(completaronPais.size() == 0) {
+			completaronPais.add("Nadie completo el pais");
+		}
+		return completaronPais;
 	}
 
 }

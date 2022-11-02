@@ -122,4 +122,11 @@ public class Participante {
 		return -1; // no encontro ninguna repetida, retorno -1
 	}
 
+	public boolean completoPais(String nombrePais) {
+		if(!_album.get_equipos().containsKey(nombrePais)) {
+			return false;
+		}
+		
+		return _album.completoPaisX(nombrePais);
+	}
 }
