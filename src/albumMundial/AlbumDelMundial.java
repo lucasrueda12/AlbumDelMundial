@@ -204,8 +204,14 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public boolean intercambiarUnaFiguritaRepetida(int dni) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}
+		
+		int codFig= buscarFiguritaRepetida(dni);
+		
+		
+		return intercambiar(dni, codFig);
 	}
 
 	@Override
