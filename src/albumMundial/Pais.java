@@ -9,7 +9,7 @@ public class Pais {
 
 	private String _nombre;
 	private Integer _ranking;
-	private List<Figurita> _figuritasDeJugadores; // Falta definir;
+	private List<Figurita> _figuritasDeJugadores;
 
 	public Pais(String nombre, Integer ranking) {
 		_nombre = nombre;

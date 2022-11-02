@@ -16,6 +16,15 @@ public class Participante {
 		_album = album;
 
 	}
+	
+	public String get_nombre() {
+		return _nombre;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(" - (%d) %s: %s", _dni, _nombre, darPremio());
+	}
 
 	public int getDni() {
 		return _dni;
@@ -24,7 +33,7 @@ public class Participante {
 	public void agregarSobreAColeccion(List<Figurita> sobre) {
 
 		for (Figurita figurita : sobre) {
-			_coleccionFiguritas.add(figurita);
+			_coleccionFiguritas.add(figurita); 
 		}
 	}
 
@@ -37,7 +46,7 @@ public class Participante {
 			throw new RuntimeException("No es posible utilizar este método. Participante no tiene un Álbum Web");
 		}
 		Web web = (Web) _album;
-		return web.tieneCodigoDisponible();
+		return web.tieneCodigoDisponible(); // si todavia no uso el codigo retorna true
 	}
 	
 	public boolean tieneSorteoDisponible() {
@@ -45,7 +54,7 @@ public class Participante {
 			throw new RuntimeException("No es posible utilizar este método. Participante no tiene un Álbum Tradicional");
 		}
 		Tradicional trad = (Tradicional) _album;
-		return !trad.solicitoSorteo();
+		return !trad.solicitoSorteo(); // si no solicito el sorteo antes esto retorna true
 	}
 
 	public void usarCodigo() {
@@ -54,7 +63,7 @@ public class Participante {
 		}
 		
 		Web web = (Web) _album;
-		web.usarCodigo();
+		web.usarCodigo(); // usa el codigo volviendolo false
 	}
 	
 	public void usarSorteo() {
@@ -63,24 +72,54 @@ public class Participante {
 		}
 		
 		Tradicional trad = (Tradicional) _album;
-		trad.sorteoRealizado();
+		trad.sorteoRealizado(); // uso el sorteo por lo que cambio su valor a true
 	}
 
 	public List<String> pegarFiguritas() {
 		// genera una lista y comienza a intentar pegar
 		//las figuritas posibles
 		List<String> peg = new ArrayList<>();
+		List<Figurita> noPegadas = new ArrayList<>(); // almaceno las figuritas no pegadas para remplazar la antigua coleccion
 		for(Figurita f: _coleccionFiguritas) {
 			if(!_album.sePegoFigurita(f)) {
 				_album.pegarFigurita(f);
 				peg.add(f.get_nombrePais() + "-" +f.get_numJugador());
+			}else {
+				noPegadas.add(f);  // agrego las que no fueron pegadas
 			}
 		}
-		return peg;
+		_coleccionFiguritas = noPegadas; // La coleccion ahora tendra las figuritas que no fueron pegadas
+		return peg; // retorno la lista de strings
 	}
 	
+	
+	
 	public boolean albumCompleto() {
-		return _album.estaCompletoA();
+		return _album.estaCompletoA();  // le pregunta a album si esta completo
+	}
+	
+	public String darPremio() {
+		return _album.darPremio();
+	}
+	
+
+	public int traerID_figuritaRepetida() { // envia el id de alguna figurita repetida, si no hay manda -1
+		for(Figurita f: _coleccionFiguritas) { // recorro la coleccion
+			if(_album.sePegoFigurita(f)) { 
+				return f.get_id();  // si la figurita ya fue pegada entonces es repetida
+			}else {
+				int cont =0;  // sino busco que tenga mas de una
+				for(Figurita otraf: _coleccionFiguritas) { 
+					if(f.equals(otraf)) {
+						cont++;
+					}
+				}
+				if(cont>1) {  // si tiene mas de una es que esta repetida y la retorno
+					return f.get_id();
+				}
+			}
+		}
+		return -1; // no encontro ninguna repetida, retorno -1
 	}
 
 }

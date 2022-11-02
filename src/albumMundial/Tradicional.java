@@ -9,7 +9,6 @@ public class Tradicional extends Album {
 
 	public Tradicional(String tipo) {
 		super(tipo);
-		// Falta definir como declaramos el numero del sorteo;
 		_solicitoSorteo = false;
 	}
 
@@ -23,8 +22,6 @@ public class Tradicional extends Album {
 
 	@Override
 	public String darPremio() {
-//		Falta arrojar las excepciones de si el participante no está registrado
-//		 o si no completó el album.
 		return "Te ganaste una pelota!";
 	}
 

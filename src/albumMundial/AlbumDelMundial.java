@@ -159,7 +159,8 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			throw new RuntimeException("No se encuentra registrado");
 		}
 		
-		return 0;
+		Participante participante = _participantes.get(dni);
+		return participante.traerID_figuritaRepetida();
 	}
 
 	@Override
@@ -176,20 +177,35 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public String darNombre(int dni) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}
+		Participante participante = _participantes.get(dni);
+		return participante.get_nombre();
 	}
 
 	@Override
 	public String darPremio(int dni) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}else if(!_participantes.get(dni).albumCompleto()) {
+			throw new RuntimeException("Todavia no completo el album");
+		}
+		
+		Participante participante = _participantes.get(dni);
+		
+		return participante.darPremio();
 	}
 
 	@Override
 	public String listadoDeGanadores() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sb = new StringBuilder();
+		for(Map.Entry<Integer, Participante> p: _participantes.entrySet()) {
+			if(p.getValue().albumCompleto()) {
+				sb.append(p.getValue().toString() + "\n");
+			}
+		}
+		return sb.toString();
 	}
 
 	@Override
