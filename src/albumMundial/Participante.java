@@ -129,4 +129,35 @@ public class Participante {
 		
 		return _album.completoPaisX(nombrePais);
 	}
+
+	public boolean poseeFigurita(int codFigurita) {
+		if(codFigurita <= 0) {
+			throw new RuntimeException("codigo invalido");
+		}
+		for(Figurita f: _coleccionFiguritas) {
+			if(f.get_id() == codFigurita) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Figurita traerFigurita(int codFigurita) {
+		if(codFigurita <= 0) {
+			throw new RuntimeException("codigo invalido");
+		}
+		
+		for(Figurita f: _coleccionFiguritas) {
+			if(f.get_id() == codFigurita) {
+				return f;
+			}
+		}
+		return null;
+	}
+
+	public void intercambiar(Figurita f, Figurita x) {
+		
+		_coleccionFiguritas.remove(f);
+		_coleccionFiguritas.add(x);
+	}
 }

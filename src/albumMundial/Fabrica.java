@@ -179,6 +179,12 @@ public class Fabrica {
 
 		return sobreTop10;
 	}
+	
+	// VALOR BASE
+	
+	public int valorBase(Figurita fig) {
+		return calcularValorBase(fig.get_nombrePais(), fig.get_numJugador());
+	}
 
 	///////////////////////////////////////////////////////
 	///////////// METODOS FACILITADOS POR LA CATEDRA //////

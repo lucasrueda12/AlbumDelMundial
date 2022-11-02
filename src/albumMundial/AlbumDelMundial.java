@@ -165,7 +165,40 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public boolean intercambiar(int dni, int codFigurita) {
-		// TODO Auto-generated method stub
+		if (!_participantes.containsKey(dni)) {
+			throw new RuntimeException("No se encuentra registrado");
+		}else if(!_participantes.get(dni).poseeFigurita(codFigurita)) {
+			throw new RuntimeException("No posee la figurita");
+		}
+		Participante p= _participantes.get(dni);
+		Figurita f= p.traerFigurita(codFigurita);
+		
+		if(f == null) {
+			return false;
+		}
+		
+		for(Map.Entry<Integer, Participante> otroP: _participantes.entrySet()) {
+			if(p.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){
+				int otroCod = buscarFiguritaRepetida(otroP.getKey());
+				if(otroCod != -1 && codFigurita != otroCod && !p.poseeFigurita(otroCod)) {
+					Figurita x= otroP.getValue().traerFigurita(otroCod);
+					if(!f.equals(x) && mismoValor(f, x)) {
+						p.intercambiar(f, x);
+						otroP.getValue().intercambiar(x, f);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean mismoValor(Figurita f, Figurita x) {
+		int val1= fabrica.valorBase(f);
+		int val2=fabrica.valorBase(x);
+		if(val1 == val2) {
+			return true;
+		}
 		return false;
 	}
 
