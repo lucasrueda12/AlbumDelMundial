@@ -17,8 +17,8 @@ public class Fabrica {
 	private Map<String, String[]> balonYPaisPorMundialTop10;
 	private Map<String, Integer> ranking;
 
-	private Map<Integer, Figurita> _figuritasTradicionales;
-	private Map<Integer, Ftop10> _figusTop10;
+//	private Map<Integer, Figurita> _figuritasTradicionales;
+//	private Map<Integer, Ftop10> _figusTop10;
 	private Map<String, Pais> _paises;
 
 	Fabrica() {
@@ -40,9 +40,9 @@ public class Fabrica {
 	// GENERAR PAISES
 	private Map<String, Pais> generarPaises() {
 		Map<String, Pais> ret = new HashMap<>();
-		for (String sp : paisesParticipantes) {
-			Pais x = new Pais(sp, ranking.get(sp));
-			ret.put(sp ,x);
+		for (String pais : paisesParticipantes) {
+			Pais _pais = new Pais(pais, ranking.get(pais));
+			ret.put(pais , _pais);
 		}
 		return ret;
 	}
@@ -85,18 +85,18 @@ public class Fabrica {
 
 	
 	// GENERAR ALBUMS
-	Web crearAlbumWeb() {
-		return new Web("web");
+	Album crearAlbumWeb() {
+		return new Web("Web");
 
 	}
 
 	Album crearAlbumExtendido() {
-		return new Extendido("extendido");
+		return new Extendido("Extendido");
 
 	}
 
 	Album crearAlbumTradicional() {
-		return new Tradicional("tradicional");
+		return new Tradicional("Tradicional");
 
 	}
 	

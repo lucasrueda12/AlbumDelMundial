@@ -4,9 +4,6 @@ public class Tradicional extends Album {
 
 	private boolean _solicitoSorteo;
 
-	public Tradicional() {
-	}
-
 	public Tradicional(String tipo) {
 		super(tipo);
 		_solicitoSorteo = false;

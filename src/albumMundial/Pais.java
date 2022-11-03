@@ -17,30 +17,28 @@ public class Pais {
 		_figuritasDeJugadores = new ArrayList<>();
 	}
 	
-	public boolean sePegoFigPais(Figurita f) {
-		if(f == null) {
+	public boolean sePegoFigPais(Figurita figurita) {
+		
+		if(figurita== null) {
 			return true;
 		}
 		if(_figuritasDeJugadores.size() == 0) {
 			return false;
 		}
 		
-		for(Figurita x: _figuritasDeJugadores) {
-			if(x.equals(f)) return true;
-		}
-		return false;
+		return _figuritasDeJugadores.contains(figurita);
 	}
 	
-	public void pegarFigPais(Figurita f) {
-		if(f == null) {
+	public void pegarFigPais(Figurita figurita) {
+		if(figurita == null) {
 			throw new RuntimeException("figurita nulla");
 		}
-		if(!sePegoFigPais(f)) {
-			_figuritasDeJugadores.add(f);
+		if(!sePegoFigPais(figurita)) {
+			_figuritasDeJugadores.add(figurita);
 		}
 	}
 	
-	public boolean estaCompletoP(){
+	public boolean estaCompletoPais(){
 		return _figuritasDeJugadores.size() == 12;
 	}
 }

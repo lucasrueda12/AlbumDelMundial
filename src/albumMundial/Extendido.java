@@ -6,11 +6,8 @@ import java.util.Map;
 
 public class Extendido extends Tradicional{
 	
-	private List<Ftop10> _figuritasTop10; //Falta definir q chucha hacemos con el map.
+	private List<Ftop10> _figuritasTop10; 
 //	Array de size 2 como value para que el primer elemento sea el jugador con balon de oro y el segundo con el de plata. 
-	
-	public Extendido() {	
-	}
 
 	public Extendido(String tipo) {
 		super(tipo);
@@ -21,5 +18,17 @@ public class Extendido extends Tradicional{
 	public String darPremio() {
 		return "Te ganaste una pelota y un viaje!";
 	}
+	
+	public boolean sePegoFiguritaTop10(Ftop10 figurita) {
+		
+		if(figurita == null) {
+			return true;
+		}
+
+		return _figuritasTop10.contains(figurita);	
+	}
+	
+
+	
 
 }

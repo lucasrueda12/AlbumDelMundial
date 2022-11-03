@@ -18,6 +18,7 @@ public class Figurita {
 	public int get_id() {
 		return _id;
 	}
+	
 	public int get_numJugador(){
 		return _numJugador;
 	}
@@ -47,10 +48,7 @@ public class Figurita {
 		
 		Figurita fig = (Figurita) obj;
 		
-		if(_numJugador == fig.get_numJugador() && _nombrePais.equals(fig.get_nombrePais()) && _tipo.equals(fig.get_tipo())) {
-			return true;
-		}
-		return false;
+		return _numJugador == fig.get_numJugador() && _nombrePais.equals(fig.get_nombrePais()) && _tipo.equals(fig.get_tipo());
 	}
 	
 }

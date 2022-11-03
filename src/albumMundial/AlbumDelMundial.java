@@ -12,19 +12,19 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	private Random random;
 	
 //	private Map<Integer, Integer> _albumesComprados; // no se para q vamos a usar esto tampoco, si para eso vemos el map de participantes												// listado de participantes
-//	private Map<String, Pais> _paisesParticipantes;
+
 	private Map<Integer, Participante> _participantes;
-//	private Map<Integer, Figurita> _solicitudesDeIntercambio; // Vamo a ver si la usamos.
+
 	private Fabrica fabrica;
 
-	public AlbumDelMundial() { // Sobrecarga.
+	public AlbumDelMundial() { 
 		fabrica = new Fabrica();
+		
 		_participantes= new HashMap<>();
 		
 		random = new Random();
 	}
 
-// Se podran cambiar los int por Integer ¿¿
 
 	@Override
 	public int registrarParticipante(int dni, String nombre, String tipoAlbum) {
@@ -35,7 +35,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		} else if (!tipoAlbum.equals("Web") && !tipoAlbum.equals("Tradicional") && !tipoAlbum.equals("Extendido")) {
 			throw new RuntimeException("Ha ingresado un tipo de álbum incorrecto");
 		}
-		if(dni <0) {
+		if(dni < 0) {
 			throw new RuntimeException("Ha ingresado un tipo de dni erroneo");
 		}
 		if(nombre == null) throw new RuntimeException("Ha ingresado un nombre invalido");
@@ -51,19 +51,14 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		} else {
 			album = fabrica.crearAlbumExtendido();
 		}
+		
+		album.agregarPaises(fabrica.get_paises()); //Se cargan todos los paises clasificados.
 
 		Participante participante = new Participante(dni, nombre, album);
 
-		registrarParticipante(dni, participante);
+		_participantes.put(participante.getDni(), participante);
 
 		return dni;
-	}
-
-	private void registrarParticipante(int dni, Participante participante) { // No sé si es necesario este método pero
-																			// lo hice porque pensaba que el otro
-																			// quedaba muy cargado xd
-		_participantes.put(participante.getDni(), participante);
-//		_albumesComprados.put(dni, dni);
 	}
 
 	@Override
@@ -96,7 +91,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("web")) {  // cuidado con las mayusculas, para el tipo de album
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("Web")) {  // cuidado con las mayusculas, para el tipo de album
 			throw new RuntimeException("El participante no tiene un Álbum Web");
 
 		} else if (!_participantes.get(dni).tieneCodigoDisponible()) {
@@ -140,11 +135,11 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("tradicional")) { 
+		} else if (!(_participantes.get(dni).getTipoAlbum().equals("Tradicional")) && !(_participantes.get(dni).getTipoAlbum().equals("Extendido"))) { 
 			throw new RuntimeException("El participante no tiene un Álbum Tradicional");
 
 		} else if (!_participantes.get(dni).tieneSorteoDisponible()) {
-			throw new RuntimeException("El participante no tiene disponible el código promocional");
+			throw new RuntimeException("El participante no tiene disponible el sorteo");
 		}
 		
 		Participante participante= _participantes.get(dni);
@@ -172,25 +167,34 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if(codFigurita < 1) {
 			return false;
 		}
+		
 		if(!_participantes.get(dni).poseeFigurita(codFigurita)) {
 			throw new RuntimeException("No posee la figurita");
 		}
 		
-		Participante p= _participantes.get(dni);
-		Figurita f= p.traerFigurita(codFigurita);
+		Participante participante= _participantes.get(dni);
+		Figurita figurita = participante.traerFigurita(codFigurita);
 		
-		if(f == null) {
+		if(figurita == null) {
 			return false;
 		}
 		
 		for(Map.Entry<Integer, Participante> otroP: _participantes.entrySet()) {
-			if(p.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // aveces anda y aveces no xd
+			
+			if(participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // aveces anda y aveces no xd
+				
 				int otroCod = buscarFiguritaRepetida(otroP.getKey()); // el tema es que siempre trae la primer figurita
-				if(otroCod != -1 && !p.poseeFigurita(otroCod)) {
-					Figurita x= otroP.getValue().traerFigurita(otroCod);
-					if(!f.equals(x) && mismoOMenorValor(f, x)) {
-						p.intercambiar(f, x);
-						otroP.getValue().intercambiar(x, f);
+				
+				if(otroCod != -1 && !participante.poseeFigurita(otroCod)) {
+					
+					Figurita otraFigurita= otroP.getValue().traerFigurita(otroCod);
+					
+					if(!figurita.equals(otraFigurita) && mismoOMenorValor(figurita, otraFigurita)) {
+						
+						participante.intercambiar(figurita, otraFigurita);
+						
+						otroP.getValue().intercambiar(otraFigurita, figurita);
+						
 						return true;
 					}
 				}
@@ -199,9 +203,9 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		return false;
 	}
 
-	private boolean mismoOMenorValor(Figurita f, Figurita x) {
-		int val1= fabrica.valorBase(f);
-		int val2=fabrica.valorBase(x);
+	private boolean mismoOMenorValor(Figurita figurita, Figurita otraFigurita) {
+		int val1= fabrica.valorBase(figurita);
+		int val2=fabrica.valorBase(otraFigurita);
 		if(val1 >= val2) {
 			return true;
 		}

@@ -83,67 +83,98 @@ public class Participante {
 		List<String> peg = new ArrayList<>();
 		List<Figurita> noPegadas = new ArrayList<>(); // almaceno las figuritas no pegadas para remplazar la antigua
 														// coleccion
-		for (Figurita f : _coleccionFiguritas) {
-			if (!_album.sePegoFigurita(f)) {
-				_album.pegarFigurita(f);
-				peg.add(f.get_nombrePais() + "-" + f.get_numJugador());
+		for (Figurita figurita : _coleccionFiguritas) {
+			
+			if(figurita.get_tipo().equals("Tradicional") && !_album.sePegoFigurita(figurita)) {
+				
+				_album.pegarFigurita(figurita );
+				
+				peg.add(figurita .get_nombrePais() + "-" + figurita .get_numJugador());
+			
+//				Lo comente para que no tire error
+//			if (figurita.get_tipo().equals("Top10")) {
+//				
+//				Extendido extendido = (Extendido) _album;
+//				
+//				if(!extendido.sePegoFiguritaTop10(figurita)) {
+//					
+//				}
+//				
+				peg.add(figurita .get_nombrePais() + "-" + figurita .get_numJugador());
 			} else {
-				noPegadas.add(f); // agrego las que no fueron pegadas
+				noPegadas.add(figurita ); // agrego las que no fueron pegadas
 			}
 		}
 		_coleccionFiguritas = noPegadas; // La coleccion ahora tendra las figuritas que no fueron pegadas
 		return peg; // retorno la lista de strings
 	}
+	
+	
 
 	public boolean albumCompleto() {
-		return _album.estaCompletoA(); // le pregunta a album si esta completo
+		return _album.estaCompletoAlbum(); // le pregunta a album si esta completo
 	}
 
 	public String darPremio() {
 		return _album.darPremio();
 	}
 
+//	public int traerID_figuritaRepetida() {
+//		// envia el id de alguna figurita repetida, si no hay manda -1
+//		if (_coleccionFiguritas.size() == 0) {
+//			return -1;
+//		}
+//
+//		for (Figurita figurita : _coleccionFiguritas) { // recorro la coleccion
+//			if(_album.sePegoFigurita(figurita)) { 
+//				return figurita.get_id();  // si la figurita ya fue pegada entonces es repetida
+//			}
+//			int cont = 0; // sino busco que tenga mas de una
+//			for (Figurita otraf : _coleccionFiguritas) {
+//				if (figurita.equals(otraf)) {
+//					cont++;
+//				}
+//			}
+//			if (cont > 1) { // si tiene mas de una es que esta repetida y la retorno
+//				return figurita.get_id();
+//			}
+//		}
+//		System.out.println(_coleccionFiguritas.get(0).get_id());
+//		return _coleccionFiguritas.get(0).get_id(); // no encontro ninguna repetida, retorno -1
+//	}
+	
 	public int traerID_figuritaRepetida() {
-		// envia el id de alguna figurita repetida, si no hay manda -1
+		
 		if (_coleccionFiguritas.size() == 0) {
 			return -1;
 		}
+		
+		for(Figurita figurita : _coleccionFiguritas) {
 
-		for (Figurita f : _coleccionFiguritas) { // recorro la coleccion
-			if(_album.sePegoFigurita(f)) { 
-				return f.get_id();  // si la figurita ya fue pegada entonces es repetida
-			}
-			int cont = 0; // sino busco que tenga mas de una
-			for (Figurita otraf : _coleccionFiguritas) {
-				if (f.equals(otraf)) {
-					cont++;
-				}
-			}
-			if (cont > 1) { // si tiene mas de una es que esta repetida y la retorno
-				return f.get_id();
-			}
+			return figurita.get_id();
 		}
-		return _coleccionFiguritas.get(0).get_id(); // no encontro ninguna repetida, retorno -1
+		
+		return -1;
+		
 	}
 
 	public boolean completoPais(String nombrePais) {
-		if (!_album.get_equipos().containsKey(nombrePais)) {
-			return false;
-		}
-
-		return _album.completoPaisX(nombrePais);
+//		if (!_album.get_equipos().containsKey(nombrePais)) { //Este lo comente porque el método .completoPais ya lo valida!!
+//			return false;
+//		}
+		return _album.completoPais(nombrePais);
 	}
 
 	public boolean poseeFigurita(int codFigurita) {
-		System.out.println(codFigurita);
+
 		if (codFigurita == -1){
 			throw new RuntimeException("codigo invalido");
 		}
 		if (_coleccionFiguritas.size() == 0) {
 			return false;
 		}
-		for (Figurita f : _coleccionFiguritas) {
-			if (f.get_id() == codFigurita) {
+		for (Figurita figurita : _coleccionFiguritas) {
+			if (figurita.get_id() == codFigurita) {
 				return true;
 			}
 		}
@@ -155,17 +186,17 @@ public class Participante {
 			throw new RuntimeException("codigo invalido");
 		}
 
-		for (Figurita f : _coleccionFiguritas) {
-			if (f.get_id() == codFigurita) {
-				return f;
+		for (Figurita figurita : _coleccionFiguritas) {
+			if (figurita.get_id() == codFigurita) {
+				return figurita;
 			}
 		}
 		return null;
 	}
 
-	public void intercambiar(Figurita f, Figurita x) {
+	public void intercambiar(Figurita figurita, Figurita nuevaFigurita) {
 
-		_coleccionFiguritas.remove(f);
-		_coleccionFiguritas.add(x);
+		_coleccionFiguritas.remove(figurita);
+		_coleccionFiguritas.add(nuevaFigurita);
 	}
 }
