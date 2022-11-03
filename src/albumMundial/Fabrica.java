@@ -22,12 +22,6 @@ public class Fabrica {
 	private Map<String, Pais> _paises;
 
 	Fabrica() {
-
-		// instancias nuestras
-//		_figuritasTradicionales = generarFiguritasTradicionales();
-//		_figusTop10 = generarFigusTop10();
-		_paises = generarPaises();
-		
 		// instancias pre-armadas
 		random = new Random(System.currentTimeMillis());
 		lugaresPorPais = 12;
@@ -36,6 +30,11 @@ public class Fabrica {
 		balonYPaisPorMundialTop10 = generarPaisesPorMundial();
 		ranking = generarRanking();
 		premiosInstantaneos = generarPremiosParaSorteoInstantaneo();
+		
+		// ------------------instancias nuestras-----------------------------
+//		_figuritasTradicionales = generarFiguritasTradicionales();
+//		_figusTop10 = generarFigusTop10();
+		_paises = generarPaises();
 	}
 	
 	// GENERAR PAISES

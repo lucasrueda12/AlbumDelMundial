@@ -19,7 +19,7 @@ public class Pais {
 	
 	public boolean sePegoFigPais(Figurita f) {
 		if(f == null) {
-			return false;
+			return true;
 		}
 		if(_figuritasDeJugadores.size() == 0) {
 			return false;

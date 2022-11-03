@@ -1,6 +1,8 @@
 package albumMundial;
 
+import java.io.Console;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -9,15 +11,17 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	
 	private Random random;
 	
-	private Map<Integer, Integer> _albumesComprados; // no se para q vamos a usar esto tampoco, si para eso vemos el map de participantes												// listado de participantes
-	private Map<String, Pais> _paisesParticipantes;
+//	private Map<Integer, Integer> _albumesComprados; // no se para q vamos a usar esto tampoco, si para eso vemos el map de participantes												// listado de participantes
+//	private Map<String, Pais> _paisesParticipantes;
 	private Map<Integer, Participante> _participantes;
-	private Map<Integer, Figurita> _solicitudesDeIntercambio; // Vamo a ver si la usamos.
+//	private Map<Integer, Figurita> _solicitudesDeIntercambio; // Vamo a ver si la usamos.
 	private Fabrica fabrica;
 
 	public AlbumDelMundial() { // Sobrecarga.
 		fabrica = new Fabrica();
-
+		_participantes= new HashMap<>();
+		
+		random = new Random();
 	}
 
 // Se podran cambiar los int por Integer ¿¿
@@ -28,7 +32,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (_participantes.containsKey(dni)) {
 			throw new RuntimeException("Participante ya se encuentra registrado");
 
-		} else if (!tipoAlbum.equals("Web") || !tipoAlbum.equals("Tradicional") || !tipoAlbum.equals("Extendido")) {
+		} else if (!tipoAlbum.equals("Web") && !tipoAlbum.equals("Tradicional") && !tipoAlbum.equals("Extendido")) {
 			throw new RuntimeException("Ha ingresado un tipo de álbum incorrecto");
 		}
 		if(dni <0) {
@@ -59,7 +63,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 																			// lo hice porque pensaba que el otro
 																			// quedaba muy cargado xd
 		_participantes.put(participante.getDni(), participante);
-		_albumesComprados.put(dni, dni);
+//		_albumesComprados.put(dni, dni);
 	}
 
 	@Override
@@ -77,7 +81,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("extendido")) {
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("Extendido")) {
 			throw new RuntimeException("El participante no cuenta con un Álbum Extendido");
 		}
 
@@ -117,9 +121,6 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		List<String> pegadas = new ArrayList<>();
 		pegadas = participante.pegarFiguritas();
 		
-		if(pegadas.size() == 0) {
-			pegadas.add("No se pego ninguna figurita");
-		}
 		return pegadas;
 	}
 
@@ -139,16 +140,15 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("tradicional")) {  // cuidado con las mayusculas, para el tipo de album
-			throw new RuntimeException("El participante no tiene un Álbum Web");
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("tradicional")) { 
+			throw new RuntimeException("El participante no tiene un Álbum Tradicional");
 
 		} else if (!_participantes.get(dni).tieneSorteoDisponible()) {
 			throw new RuntimeException("El participante no tiene disponible el código promocional");
-
 		}
 		
 		Participante participante= _participantes.get(dni);
-		int x = random.nextInt(4);
+		int x = random.nextInt(3);
 		participante.usarSorteo();
 		return fabrica.sortearPremio(x);
 	}
@@ -167,9 +167,15 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	public boolean intercambiar(int dni, int codFigurita) {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
-		}else if(!_participantes.get(dni).poseeFigurita(codFigurita)) {
+		}
+		System.out.println(codFigurita);
+		if(codFigurita < 1) {
+			return false;
+		}
+		if(!_participantes.get(dni).poseeFigurita(codFigurita)) {
 			throw new RuntimeException("No posee la figurita");
 		}
+		
 		Participante p= _participantes.get(dni);
 		Figurita f= p.traerFigurita(codFigurita);
 		
@@ -178,11 +184,11 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		}
 		
 		for(Map.Entry<Integer, Participante> otroP: _participantes.entrySet()) {
-			if(p.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){
-				int otroCod = buscarFiguritaRepetida(otroP.getKey());
-				if(otroCod != -1 && codFigurita != otroCod && !p.poseeFigurita(otroCod)) {
+			if(p.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // aveces anda y aveces no xd
+				int otroCod = buscarFiguritaRepetida(otroP.getKey()); // el tema es que siempre trae la primer figurita
+				if(otroCod != -1 && !p.poseeFigurita(otroCod)) {
 					Figurita x= otroP.getValue().traerFigurita(otroCod);
-					if(!f.equals(x) && mismoValor(f, x)) {
+					if(!f.equals(x) && mismoOMenorValor(f, x)) {
 						p.intercambiar(f, x);
 						otroP.getValue().intercambiar(x, f);
 						return true;
@@ -193,10 +199,10 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		return false;
 	}
 
-	private boolean mismoValor(Figurita f, Figurita x) {
+	private boolean mismoOMenorValor(Figurita f, Figurita x) {
 		int val1= fabrica.valorBase(f);
 		int val2=fabrica.valorBase(x);
-		if(val1 == val2) {
+		if(val1 >= val2) {
 			return true;
 		}
 		return false;
@@ -209,8 +215,6 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		}
 		
 		int codFig= buscarFiguritaRepetida(dni);
-		
-		
 		return intercambiar(dni, codFig);
 	}
 
@@ -254,9 +258,6 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			if(p.getValue().completoPais(nombrePais)) {
 				completaronPais.add(p.getValue().toString());
 			}
-		}
-		if(completaronPais.size() == 0) {
-			completaronPais.add("Nadie completo el pais");
 		}
 		return completaronPais;
 	}

@@ -33,7 +33,7 @@ public class Figurita {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash( _nombrePais, _numJugador, _tipo);
+		return ( _nombrePais.length() + _numJugador + _tipo.length())* 7 + _numJugador;
 	}
 
 	@Override

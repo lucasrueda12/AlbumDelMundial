@@ -17,6 +17,7 @@ public class Album {
 	public Album(String tipo) {
 		_tipo = tipo; // tipo lo usamos para saber que album vamos a construir, y guardamos esta
 						// referencia
+		fabrica= new Fabrica();
 		_equipos = fabrica.get_paises();
 	}
 
@@ -36,7 +37,7 @@ public class Album {
 		// sino recorre la coleccion y comprueba que este pegada
 		// y si coincide retorna true , si no se encuentra retorna false
 		if(f == null) {
-			return false;
+			return true;
 		}
 		if(!_equipos.containsKey(f.get_nombrePais())) {
 			return false;
