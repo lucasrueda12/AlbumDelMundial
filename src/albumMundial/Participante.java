@@ -37,7 +37,7 @@ public class Participante {
 
 	@Override
 	public String toString() {
-		return String.format(" - (%d) %s: %s", _dni, _nombre, darPremio());
+		return String.format(" - (%d) %s: %s", _dni, _nombre, darPremio()) + "\n" + _album.toString(); 
 	}
 
 	public String get_nombre() {
@@ -46,10 +46,6 @@ public class Participante {
 	
 	public int getDni() {
 		return _dni;
-	}
-	
-	public Album get_album() {
-		return _album;
 	}
 
 	public void agregarSobreAColeccion(List<Figurita> sobre) {

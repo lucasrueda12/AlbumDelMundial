@@ -29,7 +29,6 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			
 			sb.append(participante);
 			sb.append("\n");
-			sb.append(participante.get_album());
 		}
 		
 		return sb.toString();
