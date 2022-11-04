@@ -52,7 +52,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			album = fabrica.crearAlbumExtendido();
 		}
 		
-		album.agregarPaises(fabrica.get_paises()); //Se cargan todos los paises clasificados.
+		album.cargarPaises(fabrica.get_paises()); //Se cargan todos los paises clasificados.
 
 		Participante participante = new Participante(dni, nombre, album);
 

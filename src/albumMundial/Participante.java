@@ -95,38 +95,6 @@ public class Participante {
 		trad.sorteoRealizado(); // uso el sorteo por lo que cambio su valor a true
 	}
 
-//	public List<String> pegarFiguritas() {
-//		// genera una lista y comienza a intentar pegar
-//		// las figuritas posibles
-//		List<String> peg = new ArrayList<>();
-//		List<Figurita> noPegadas = new ArrayList<>(); // almaceno las figuritas no pegadas para remplazar la antigua
-//														// coleccion
-//		for (Figurita figurita : _coleccionFiguritas) {
-//			
-//			if(figurita.get_tipo().equals("Tradicional") && !_album.sePegoFigurita(figurita)) {
-//				
-//				_album.pegarFigurita(figurita );
-//				
-//				peg.add(figurita .get_nombrePais() + "-" + figurita .get_numJugador());
-//			
-////				Lo comente para que no tire error
-////			if (figurita.get_tipo().equals("Top10")) {
-////				
-////				Extendido extendido = (Extendido) _album;
-////				
-////				if(!extendido.sePegoFiguritaTop10(figurita)) {
-////					
-////				}
-////				
-//				peg.add(figurita .get_nombrePais() + "-" + figurita .get_numJugador());
-//			} else {
-//				
-//				noPegadas.add(figurita ); // agrego las que no fueron pegadas
-//			}
-//		}
-//		_coleccionFiguritas = noPegadas; // La coleccion ahora tendra las figuritas que no fueron pegadas
-//		return peg; // retorno la lista de strings
-//	}
 	
 	public List<String> pegarFiguritas(){
 		
@@ -145,7 +113,7 @@ public class Participante {
 					
 					extendido.pegarFiguritasTop10(figuritaTop10);
 							
-					peg.add(figuritaTop10 .get_nombrePais() + "-" + figuritaTop10.get_numJugador());
+					peg.add(figurita.toString());
 							
 					it.remove();
 			}

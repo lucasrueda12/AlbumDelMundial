@@ -64,7 +64,7 @@ public class Album {
 	}
 
 	
-	public void agregarPaises(Map<String, Pais> _paises) {
+	public void cargarPaises(Map<String, Pais> _paises) {
 		_equipos = _paises;
 	}
 

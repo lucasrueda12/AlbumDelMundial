@@ -15,6 +15,11 @@ public class Figurita {
 		_id = hashCode();
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("%s - %d", _nombrePais, _numJugador);
+	}
+	
 	public int get_id() {
 		return _id;
 	}
