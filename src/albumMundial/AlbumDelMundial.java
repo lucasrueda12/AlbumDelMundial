@@ -143,9 +143,9 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		}
 		
 		Participante participante= _participantes.get(dni);
-		int x = random.nextInt(3);
+		int numeroSorteo = random.nextInt(3);
 		participante.usarSorteo();
-		return fabrica.sortearPremio(x);
+		return fabrica.sortearPremio(numeroSorteo);
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 		}
-		System.out.println(codFigurita);
+
 		if(codFigurita < 1) {
 			return false;
 		}
@@ -180,27 +180,30 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		}
 		
 		for(Map.Entry<Integer, Participante> otroP: _participantes.entrySet()) {
-			
-			if(participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // aveces anda y aveces no xd
-				
-				int otroCod = buscarFiguritaRepetida(otroP.getKey()); // el tema es que siempre trae la primer figurita
-				
-				if(otroCod != -1 && !participante.poseeFigurita(otroCod)) {
 					
-					Figurita otraFigurita= otroP.getValue().traerFigurita(otroCod);
+			if(!participante.equals(otroP.getValue())) { //Aca valide que sean dos participante diferentes, para que dentro del map no tome al mismo participante.
+				
+				if(participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // aveces anda y aveces no xd
 					
-					if(!figurita.equals(otraFigurita) && mismoOMenorValor(figurita, otraFigurita)) {
+					int otroCod = buscarFiguritaRepetida(otroP.getKey()); // el tema es que siempre trae la primer figurita
+					
+					if(otroCod != -1 && !participante.poseeFigurita(otroCod)) {
 						
-						participante.intercambiar(figurita, otraFigurita);
+						Figurita otraFigurita= otroP.getValue().traerFigurita(otroCod);
 						
-						otroP.getValue().intercambiar(otraFigurita, figurita);
-						
-						return true;
+						if(!figurita.equals(otraFigurita) && mismoOMenorValor(figurita, otraFigurita)) {
+							
+							participante.intercambiar(figurita, otraFigurita);
+							
+							otroP.getValue().intercambiar(otraFigurita, figurita);
+							
+							return true;
+						}
 					}
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	private boolean mismoOMenorValor(Figurita figurita, Figurita otraFigurita) {

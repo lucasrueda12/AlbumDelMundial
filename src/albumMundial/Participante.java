@@ -14,12 +14,24 @@ public class Participante {
 		_dni = dni;
 		_nombre = nombre;
 		_album = album;
-
 		_coleccionFiguritas = new ArrayList<>();
 	}
 
-	public String get_nombre() {
-		return _nombre;
+	@Override 
+	public boolean equals(Object obj) {
+		
+		if(obj == null) {
+			return false;
+		}
+		
+		if(!(obj instanceof Participante)) {
+			return false;
+		}
+		
+		Participante participante = (Participante) obj;		
+	
+		return _dni == participante._dni && _nombre == participante._nombre;
+		
 	}
 
 	@Override
@@ -27,9 +39,14 @@ public class Participante {
 		return String.format(" - (%d) %s: %s", _dni, _nombre, darPremio());
 	}
 
+	public String get_nombre() {
+		return _nombre;
+	}
+	
 	public int getDni() {
 		return _dni;
 	}
+	
 
 	public void agregarSobreAColeccion(List<Figurita> sobre) {
 

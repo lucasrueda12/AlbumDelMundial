@@ -28,6 +28,19 @@ public class Extendido extends Tradicional{
 		return _figuritasTop10.contains(figurita);	
 	}
 	
+	public void pegarFiguritasTop10(Ftop10 figurita) {
+		
+		if(figurita == null) {
+			throw new RuntimeException("figurita nulla");
+		}
+		
+		if(!_figuritasTop10.contains(figurita)) {
+			
+			_figuritasTop10.add(figurita);
+		}
+
+	}
+	
 
 	
 

@@ -16,9 +16,6 @@ public class Fabrica {
 	private String[] listadoDeMundialesTop10;
 	private Map<String, String[]> balonYPaisPorMundialTop10;
 	private Map<String, Integer> ranking;
-
-//	private Map<Integer, Figurita> _figuritasTradicionales;
-//	private Map<Integer, Ftop10> _figusTop10;
 	private Map<String, Pais> _paises;
 
 	Fabrica() {
@@ -32,8 +29,7 @@ public class Fabrica {
 		premiosInstantaneos = generarPremiosParaSorteoInstantaneo();
 		
 		// ------------------instancias nuestras-----------------------------
-//		_figuritasTradicionales = generarFiguritasTradicionales();
-//		_figusTop10 = generarFigusTop10();
+
 		_paises = generarPaises();
 	}
 	
@@ -50,29 +46,6 @@ public class Fabrica {
 		return _paises;
 	}
 
-//	private Map<Integer, Ftop10> generarFigusTop10() {
-//		Map<Integer, Ftop10> ret = new HashMap<>();
-//		for(int j=0; j<listadoDeMundialesTop10.length; j++) {
-//			String sede = listadoDeMundialesTop10[j];
-//			String[] sarr = balonYPaisPorMundialTop10.get(listadoDeMundialesTop10[j]);
-//			Ftop10 x = new Ftop10(sarr[0], sede , "oro");
-//			Ftop10 x2 = new Ftop10(sarr[1], sede , "plata");
-//			ret.put(x.get_id(), x);
-//			ret.put(x2.get_id(), x2);
-//		}
-//		return ret;
-//	}
-
-//	private Map<Integer, Figurita> generarFiguritasTradicionales() {
-//		Map<Integer, Figurita> ret= new HashMap<>();
-//		for(int i=0; i<paisesParticipantes.length; i++) {
-//			for(int j=1; j<13; j++) {
-//				Figurita x= new Figurita("tradicional", j, paisesParticipantes[i]);
-//				ret.put(x.get_id(), x);
-//			}
-//		}
-//		return ret;
-//	}
 
 	////////////////////////////////////////////////////////////////////////
 	// NOTA: Deben implementar los siguientes metodos segun su modelo //
@@ -102,20 +75,12 @@ public class Fabrica {
 	
 	// SORTEO
 	
-	public String sortearPremio(int x) {
-		return premiosInstantaneos[x];
+	public String sortearPremio(int numSorteo) {
+		return premiosInstantaneos[numSorteo];
 	}
 	
 	
 	// GENERAR SOBRES DE FIGURITAS
-//
-//	List<Figurita> generarSobre(int cantFigus) {
-//		List<Figurita> fList = new ArrayList<>();
-//		for(int i=0; i<cantFigus; i++) {
-//			fList.add(_figuritasTradicionales.get(random.nextInt(_figuritasTradicionales.size()))); 
-//		}
-//		return fList;
-//	}
 
 	List<Figurita> generarSobre(int cantFigus) {
 		List<Figurita> sobre = new ArrayList<Figurita>();
@@ -134,13 +99,6 @@ public class Fabrica {
 		return sobre;
 	}
 
-//	List<Figurita> generarSobreTop10(int cantFigus) {
-//		List<Figurita> topList= new ArrayList<>();
-//		for(int i=0; i<cantFigus; i++) {
-//			topList.add(_figusTop10.get(random.nextInt(_figusTop10.size()))); 
-//		}
-//		return topList;
-//	}
 
 	List<Figurita> generarSobreTop10(int cantFigus) {
 		List<Figurita> sobreTop10 = new ArrayList<Figurita>();
