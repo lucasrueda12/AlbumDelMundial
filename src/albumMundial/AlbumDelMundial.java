@@ -183,13 +183,15 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 					
 			if(!participante.equals(otroP.getValue())) { //Aca valide que sean dos participante diferentes, para que dentro del map no tome al mismo participante.
 				
-				if(participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // aveces anda y aveces no xd
+				if(participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // mismo album
 					
-					int otroCod = buscarFiguritaRepetida(otroP.getKey()); // el tema es que siempre trae la primer figurita
+					int otroCod = buscarFiguritaRepetida(otroP.getKey()); // busca fig repetida
 					
 					if(otroCod != -1 && !participante.poseeFigurita(otroCod)) {
 						
 						Figurita otraFigurita= otroP.getValue().traerFigurita(otroCod);
+						
+						// si una es top 10 y la otra es tradicional se intercambian si tienen el mismo valor
 						
 						if(!figurita.equals(otraFigurita) && mismoOMenorValor(figurita, otraFigurita)) {
 							
@@ -209,10 +211,17 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	private boolean mismoOMenorValor(Figurita figurita, Figurita otraFigurita) {
 		int val1= fabrica.valorBase(figurita);
 		int val2=fabrica.valorBase(otraFigurita);
-		if(val1 >= val2) {
-			return true;
+		
+		if(figurita.get_tipo().equals("top10")) {
+			Ftop10 f1= (Ftop10) figurita;
+			val1*= f1.get_balon().equals("oro")? 1.20 : 1.10;
 		}
-		return false;
+		if(otraFigurita.get_tipo().equals("top10")) {
+			Ftop10 f2= (Ftop10) otraFigurita;
+			val1*= f2.get_balon().equals("oro")? 1.20 : 1.10;
+		}
+		return val1 >= val2;
+		
 	}
 
 	@Override

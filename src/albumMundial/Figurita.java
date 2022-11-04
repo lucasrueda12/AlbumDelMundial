@@ -12,7 +12,7 @@ public class Figurita {
 		_tipo = tipo;
 		_numJugador = numJugador;
 		_nombrePais = nombrePais;
-		_id = hashCode();
+		set_id(hashCode());
 	}
 	
 	@Override
@@ -20,6 +20,9 @@ public class Figurita {
 		return String.format("%s - %d", _nombrePais, _numJugador);
 	}
 	
+	public void set_id(int x) {
+		_id = x;
+	}
 	public int get_id() {
 		return _id;
 	}

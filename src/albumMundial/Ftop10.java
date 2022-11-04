@@ -11,9 +11,15 @@ public class Ftop10 extends Figurita {
 		super("Top10", numJugador, nombrePais);
 		_paisSede = paisSede;
 		_balon = balon;
+		this.set_id(hashCode());
 	}
 	
 	
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode() + _balon.length() * _paisSede.length() *10;
+	}
 	
 	public String get_paisSede() {
 		return _paisSede;
@@ -35,9 +41,8 @@ public class Ftop10 extends Figurita {
 		
 		Ftop10 fig = (Ftop10) obj;
 		
-		return super.equals(obj) && _paisSede.equals(fig.get_paisSede()) && _balon.equals(fig.get_balon()); 
-		//Dudo de que super.equals(obj) esté bien o tenga que hacer el equals aparte de Ftop10 y poner los atributos de 
-		//Figurita en protected.
+		return super.equals((Figurita)obj) && _paisSede.equals(fig.get_paisSede()) && _balon.equals(fig.get_balon()); 
+		
 	}
 
 }
