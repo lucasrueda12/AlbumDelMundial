@@ -102,23 +102,11 @@ public class Fabrica {
 
 		for (int i = 0; i < cantFigus; i++) {
 			int numJugador = random.nextInt(12); // asigna un numero de jugador random
-			String paisSede = listadoDeMundialesTop10[random.nextInt(listadoDeMundialesTop10.length)]; // Asigna un pais
-																										// sede random
-																										// desde 0 hasta
-																										// el length-1
-																										// de
-																										// mundialesTop10;
-			String nombrePais = balonYPaisPorMundialTop10.get(paisSede)[random.nextInt(2)]; // Segun el pais sede que se
-																							// asignó
-																							// anteriormente,aleatoriamente
-																							// elije 1 de los 2 paises
-																							// que contienen en el array
-																							// de string.
+			String paisSede = listadoDeMundialesTop10[random.nextInt(listadoDeMundialesTop10.length)]; 
+			String nombrePais = balonYPaisPorMundialTop10.get(paisSede)[random.nextInt(2)]; 
 			String balon;
 
-			if (nombrePais.equals(balonYPaisPorMundialTop10.get(paisSede)[0])) { // Se verifica si el nombrePais que se
-																					// asigno antes aleatoriamente se
-																					// encuentra en la posicion 0 o 1.
+			if (nombrePais.equals(balonYPaisPorMundialTop10.get(paisSede)[0])) { 
 				balon = "oro"; // si esta en la pos 0 significa que es el balon de oro.
 			} else {
 
