@@ -18,7 +18,6 @@ public class Web extends Album {
 		_codigoProm = false;
 	}
 
-	
 	public boolean tieneCodigoDisponible() {
 		return _codigoProm;
 	}

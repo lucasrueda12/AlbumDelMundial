@@ -27,25 +27,25 @@ public class Fabrica {
 		balonYPaisPorMundialTop10 = generarPaisesPorMundial();
 		ranking = generarRanking();
 		premiosInstantaneos = generarPremiosParaSorteoInstantaneo();
-		
+
 		// ------------------instancias nuestras-----------------------------
 
 		_paises = generarPaises();
 	}
-	
+
 	// GENERAR PAISES
 	private Map<String, Pais> generarPaises() {
 		Map<String, Pais> ret = new HashMap<>();
 		for (String pais : paisesParticipantes) {
 			Pais _pais = new Pais(pais, ranking.get(pais));
-			ret.put(pais , _pais);
+			ret.put(pais, _pais);
 		}
 		return ret;
 	}
-	public Map<String, Pais> get_paises(){
+
+	public Map<String, Pais> get_paises() {
 		return _paises;
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	// NOTA: Deben implementar los siguientes metodos segun su modelo //
@@ -56,7 +56,6 @@ public class Fabrica {
 	// tendrá una figurita en particula. //
 	////////////////////////////////////////////////////////////////////////
 
-	
 	// GENERAR ALBUMS
 	Album crearAlbumWeb() {
 		return new Web("Web");
@@ -72,14 +71,13 @@ public class Fabrica {
 		return new Tradicional("Tradicional");
 
 	}
-	
+
 	// SORTEO
-	
+
 	public String sortearPremio(int numSorteo) {
 		return premiosInstantaneos[numSorteo];
 	}
-	
-	
+
 	// GENERAR SOBRES DE FIGURITAS
 
 	List<Figurita> generarSobre(int cantFigus) {
@@ -98,7 +96,6 @@ public class Fabrica {
 
 		return sobre;
 	}
-
 
 	List<Figurita> generarSobreTop10(int cantFigus) {
 		List<Figurita> sobreTop10 = new ArrayList<Figurita>();
@@ -136,9 +133,9 @@ public class Fabrica {
 
 		return sobreTop10;
 	}
-	
+
 	// VALOR BASE
-	
+
 	public int valorBase(Figurita fig) {
 		return calcularValorBase(fig.get_nombrePais(), fig.get_numJugador());
 	}

@@ -1,6 +1,5 @@
 package albumMundial;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,23 +7,33 @@ import java.util.Map;
 import java.util.Random;
 
 public class AlbumDelMundial implements IAlbumDelMundial {
-	
+
 	private Random random;
-	
-//	private Map<Integer, Integer> _albumesComprados; // no se para q vamos a usar esto tampoco, si para eso vemos el map de participantes												// listado de participantes
-
 	private Map<Integer, Participante> _participantes;
-
 	private Fabrica fabrica;
 
-	public AlbumDelMundial() { 
+	public AlbumDelMundial() {
+
 		fabrica = new Fabrica();
-		
-		_participantes= new HashMap<>();
-		
+		_participantes = new HashMap<>();
 		random = new Random();
 	}
-
+	
+	@Override 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("Participantes: ");
+		sb.append("\n");
+		for(Participante participante : _participantes.values()) {
+			
+			sb.append(participante);
+			sb.append("\n");
+			sb.append(participante.get_album());
+		}
+		
+		return sb.toString();
+	}
 
 	@Override
 	public int registrarParticipante(int dni, String nombre, String tipoAlbum) {
@@ -35,10 +44,11 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		} else if (!tipoAlbum.equals("Web") && !tipoAlbum.equals("Tradicional") && !tipoAlbum.equals("Extendido")) {
 			throw new RuntimeException("Ha ingresado un tipo de álbum incorrecto");
 		}
-		if(dni < 0) {
-			throw new RuntimeException("Ha ingresado un tipo de dni erroneo");
+		if (dni < 0) {
+			throw new RuntimeException("Ha ingresado un tipo de dni erróneo");
 		}
-		if(nombre == null) throw new RuntimeException("Ha ingresado un nombre invalido");
+		if (nombre == null)
+			throw new RuntimeException("Ha ingresado un nombre inválido");
 
 		Album album;
 
@@ -51,14 +61,15 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		} else {
 			album = fabrica.crearAlbumExtendido();
 		}
-		
-		album.cargarPaises(fabrica.get_paises()); //Se cargan todos los paises clasificados.
+
+		album.cargarPaises(fabrica.get_paises()); // Se cargan todos los paises clasificados.
 
 		Participante participante = new Participante(dni, nombre, album);
 
 		_participantes.put(participante.getDni(), participante);
 
-		return dni;
+		return album.get_ID(); // Lo cambie a un count incremental porque pienso q el profe nos va a romper las
+								// pelotas si asociamos el dni con el album;
 	}
 
 	@Override
@@ -91,7 +102,8 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("Web")) {  // cuidado con las mayusculas, para el tipo de album
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("Web")) { // cuidado con las mayusculas, para el tipo
+																			// de album
 			throw new RuntimeException("El participante no tiene un Álbum Web");
 
 		} else if (!_participantes.get(dni).tieneCodigoDisponible()) {
@@ -109,24 +121,24 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override
 	public List<String> pegarFiguritas(int dni) {
 		if (!_participantes.containsKey(dni)) {
-			throw new RuntimeException("No se encuentra registrado");			
+			throw new RuntimeException("No se encuentra registrado");
 		}
-		
+
 		Participante participante = _participantes.get(dni);
 		List<String> pegadas = new ArrayList<>();
 		pegadas = participante.pegarFiguritas();
-		
+
 		return pegadas;
 	}
 
 	@Override
 	public boolean llenoAlbum(int dni) {
 		if (!_participantes.containsKey(dni)) {
-			throw new RuntimeException("No se encuentra registrado");			
+			throw new RuntimeException("No se encuentra registrado");
 		}
-		
+
 		Participante participante = _participantes.get(dni);
-		
+
 		return participante.albumCompleto();
 	}
 
@@ -135,17 +147,18 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!(_participantes.get(dni).getTipoAlbum().equals("Tradicional")) && !(_participantes.get(dni).getTipoAlbum().equals("Extendido"))) { 
+		} else if (!(_participantes.get(dni).getTipoAlbum().equals("Tradicional"))
+				&& !(_participantes.get(dni).getTipoAlbum().equals("Extendido"))) {
 			throw new RuntimeException("El participante no tiene un Álbum Tradicional");
 
 		} else if (!_participantes.get(dni).tieneSorteoDisponible()) {
 			throw new RuntimeException("El participante no tiene disponible el sorteo");
 		}
-		
-		Participante participante= _participantes.get(dni);
-		int numeroSorteo = random.nextInt(3);
+
+		Participante participante = _participantes.get(dni);
+		int numSorteo = random.nextInt(3);
 		participante.usarSorteo();
-		return fabrica.sortearPremio(numeroSorteo);
+		return fabrica.sortearPremio(numSorteo);
 	}
 
 	@Override
@@ -153,7 +166,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 		}
-		
+
 		Participante participante = _participantes.get(dni);
 		return participante.traerID_figuritaRepetida();
 	}
@@ -164,41 +177,43 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			throw new RuntimeException("No se encuentra registrado");
 		}
 
-		if(codFigurita < 1) {
+		if (codFigurita < 1) {
 			return false;
 		}
-		
-		if(!_participantes.get(dni).poseeFigurita(codFigurita)) {
+
+		if (!_participantes.get(dni).poseeFigurita(codFigurita)) {
 			throw new RuntimeException("No posee la figurita");
 		}
-		
-		Participante participante= _participantes.get(dni);
+
+		Participante participante = _participantes.get(dni);
 		Figurita figurita = participante.traerFigurita(codFigurita);
-		
-		if(figurita == null) {
+
+		if (figurita == null) {
 			return false;
 		}
-		
-		for(Map.Entry<Integer, Participante> otroP: _participantes.entrySet()) {
-					
-			if(!participante.equals(otroP.getValue())) { //Aca valide que sean dos participante diferentes, para que dentro del map no tome al mismo participante.
-				
-				if(participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())){  // mismo album
-					
+
+		for (Map.Entry<Integer, Participante> otroP : _participantes.entrySet()) {
+
+			if (!participante.equals(otroP.getValue())) { // Aca valide que sean dos participante diferentes, para que
+															// dentro del map no tome al mismo participante.
+
+				if (participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())) { // mismo album
+
 					int otroCod = buscarFiguritaRepetida(otroP.getKey()); // busca fig repetida
-					
-					if(otroCod != -1 && !participante.poseeFigurita(otroCod)) {
-						
-						Figurita otraFigurita= otroP.getValue().traerFigurita(otroCod);
-						
-						// si una es top 10 y la otra es tradicional se intercambian si tienen el mismo valor
-						
-						if(!figurita.equals(otraFigurita) && mismoOMenorValor(figurita, otraFigurita)) {
-							
+
+					if (otroCod != -1 && !participante.poseeFigurita(otroCod)) {
+
+						Figurita otraFigurita = otroP.getValue().traerFigurita(otroCod);
+
+						// si una es top 10 y la otra es tradicional se intercambian si tienen el mismo
+						// valor
+
+						if (!figurita.equals(otraFigurita) && mismoOMenorValor(figurita, otraFigurita)) {
+
 							participante.intercambiar(figurita, otraFigurita);
-							
+
 							otroP.getValue().intercambiar(otraFigurita, figurita);
-							
+
 							return true;
 						}
 					}
@@ -209,19 +224,19 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	}
 
 	private boolean mismoOMenorValor(Figurita figurita, Figurita otraFigurita) {
-		int val1= fabrica.valorBase(figurita);
-		int val2=fabrica.valorBase(otraFigurita);
-		
-		if(figurita.get_tipo().equals("top10")) {
-			Ftop10 f1= (Ftop10) figurita;
-			val1*= f1.get_balon().equals("oro")? 1.20 : 1.10;
+		int val1 = fabrica.valorBase(figurita);
+		int val2 = fabrica.valorBase(otraFigurita);
+
+		if (figurita.get_tipo().equals("top10")) {
+			Ftop10 f1 = (Ftop10) figurita;
+			val1 *= f1.get_balon().equals("oro") ? 1.20 : 1.10;
 		}
-		if(otraFigurita.get_tipo().equals("top10")) {
-			Ftop10 f2= (Ftop10) otraFigurita;
-			val1*= f2.get_balon().equals("oro")? 1.20 : 1.10;
+		if (otraFigurita.get_tipo().equals("top10")) {
+			Ftop10 f2 = (Ftop10) otraFigurita;
+			val1 *= f2.get_balon().equals("oro") ? 1.20 : 1.10;
 		}
 		return val1 >= val2;
-		
+
 	}
 
 	@Override
@@ -229,8 +244,8 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 		}
-		
-		int codFig= buscarFiguritaRepetida(dni);
+
+		int codFig = buscarFiguritaRepetida(dni);
 		return intercambiar(dni, codFig);
 	}
 
@@ -247,20 +262,20 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	public String darPremio(int dni) {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
-		}else if(!_participantes.get(dni).albumCompleto()) {
+		} else if (!_participantes.get(dni).albumCompleto()) {
 			throw new RuntimeException("Todavia no completo el album");
 		}
-		
+
 		Participante participante = _participantes.get(dni);
-		
+
 		return participante.darPremio();
 	}
 
 	@Override
 	public String listadoDeGanadores() {
 		StringBuilder sb = new StringBuilder();
-		for(Map.Entry<Integer, Participante> p: _participantes.entrySet()) {
-			if(p.getValue().albumCompleto()) {
+		for (Map.Entry<Integer, Participante> p : _participantes.entrySet()) {
+			if (p.getValue().albumCompleto()) {
 				sb.append(p.getValue().toString() + "\n");
 			}
 		}
@@ -269,9 +284,9 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 	@Override
 	public List<String> participantesQueCompletaronElPais(String nombrePais) {
-		List<String> completaronPais= new ArrayList<>();
-		for(Map.Entry<Integer, Participante> p: _participantes.entrySet()) {
-			if(p.getValue().completoPais(nombrePais)) {
+		List<String> completaronPais = new ArrayList<>();
+		for (Map.Entry<Integer, Participante> p : _participantes.entrySet()) {
+			if (p.getValue().completoPais(nombrePais)) {
 				completaronPais.add(p.getValue().toString());
 			}
 		}

@@ -18,21 +18,21 @@ public class Participante {
 		_coleccionFiguritas = new ArrayList<>();
 	}
 
-	@Override 
+	@Override
 	public boolean equals(Object obj) {
-		
-		if(obj == null) {
+
+		if (obj == null) {
 			return false;
 		}
-		
-		if(!(obj instanceof Participante)) {
+
+		if (!(obj instanceof Participante)) {
 			return false;
 		}
-		
-		Participante participante = (Participante) obj;		
-	
+
+		Participante participante = (Participante) obj;
+
 		return _dni == participante._dni && _nombre == participante._nombre;
-		
+
 	}
 
 	@Override
@@ -48,6 +48,9 @@ public class Participante {
 		return _dni;
 	}
 	
+	public Album get_album() {
+		return _album;
+	}
 
 	public void agregarSobreAColeccion(List<Figurita> sobre) {
 
@@ -95,41 +98,40 @@ public class Participante {
 		trad.sorteoRealizado(); // uso el sorteo por lo que cambio su valor a true
 	}
 
-	
-	public List<String> pegarFiguritas(){
-		
+	public List<String> pegarFiguritas() {
+
 		List<String> peg = new ArrayList<>();
-		Iterator <Figurita> it= _coleccionFiguritas.iterator();
-		
-		while(it.hasNext()) {
-			
-			Figurita figurita= it.next();
-			
+		Iterator<Figurita> it = _coleccionFiguritas.iterator();
+
+		while (it.hasNext()) {
+
+			Figurita figurita = it.next();
+
 			if (figurita.get_tipo().equals("Top10") && _album.getTipo().equals("Extendido")) {
-							
-					Extendido extendido = (Extendido) _album;
-					
-					Ftop10 figuritaTop10 = (Ftop10) figurita;
-					
-					extendido.pegarFiguritasTop10(figuritaTop10);
-							
-					peg.add(figurita.toString());
-							
-					it.remove();
-			}
-			
-			if (figurita.get_tipo().equals("Tradicional") && !_album.sePegoFigurita(figurita)) {
-				
-				_album.pegarFigurita(figurita );
-				
-				peg.add(figurita .get_nombrePais() + "-" + figurita .get_numJugador());
-				
+
+				Extendido extendido = (Extendido) _album;
+
+				Ftop10 figuritaTop10 = (Ftop10) figurita;
+
+				extendido.pegarFiguritasTop10(figuritaTop10);
+
+				peg.add(figurita.toString());
+
 				it.remove();
 			}
 
-		}return peg;
+			if (figurita.get_tipo().equals("Tradicional") && !_album.sePegoFigurita(figurita)) {
+
+				_album.pegarFigurita(figurita);
+
+				peg.add(figurita.toString());
+
+				it.remove();
+			}
+
+		}
+		return peg;
 	}
-	
 
 	public boolean albumCompleto() {
 		return _album.estaCompletoAlbum(); // le pregunta a album si esta completo
@@ -162,32 +164,29 @@ public class Participante {
 //		System.out.println(_coleccionFiguritas.get(0).get_id());
 //		return _coleccionFiguritas.get(0).get_id(); // no encontro ninguna repetida, retorno -1
 //	}
-	
+
 	public int traerID_figuritaRepetida() {
-		
+
 		if (_coleccionFiguritas.size() == 0) {
 			return -1;
 		}
-		
-		for(Figurita figurita : _coleccionFiguritas) {
+
+		for (Figurita figurita : _coleccionFiguritas) {
 
 			return figurita.get_id();
 		}
-		
+
 		return -1;
-		
+
 	}
 
 	public boolean completoPais(String nombrePais) {
-//		if (!_album.get_equipos().containsKey(nombrePais)) { //Este lo comente porque el método .completoPais ya lo valida!!
-//			return false;
-//		}
 		return _album.completoPais(nombrePais);
 	}
 
 	public boolean poseeFigurita(int codFigurita) {
 
-		if (codFigurita == -1){
+		if (codFigurita == -1) {
 			throw new RuntimeException("codigo invalido");
 		}
 		if (_coleccionFiguritas.size() == 0) {
@@ -215,7 +214,6 @@ public class Participante {
 	}
 
 	public void intercambiar(Figurita figurita, Figurita nuevaFigurita) {
-
 		_coleccionFiguritas.remove(figurita);
 		_coleccionFiguritas.add(nuevaFigurita);
 	}

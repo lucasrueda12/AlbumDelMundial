@@ -13,14 +13,17 @@ public class Ftop10 extends Figurita {
 		_balon = balon;
 		this.set_id(hashCode());
 	}
-	
-	
-	
+
+	@Override
+	public String toString() { // No sé si está bien este toString como agregue lo adicional. ¡¡
+		return super.toString() + String.format("%s - %d", _paisSede, _balon);
+	}
+
 	@Override
 	public int hashCode() {
-		return super.hashCode() + _balon.length() * _paisSede.length() *10;
+		return super.hashCode() + _balon.length() * _paisSede.length() * 10;
 	}
-	
+
 	public String get_paisSede() {
 		return _paisSede;
 	}
@@ -28,21 +31,21 @@ public class Ftop10 extends Figurita {
 	public String get_balon() {
 		return _balon;
 	}
-	
-	@Override 
+
+	@Override
 	public boolean equals(Object obj) {
-		
-		if(obj == null) {
+
+		if (obj == null) {
 			return false;
 		}
-		if(!(obj instanceof Ftop10)) {
+		if (!(obj instanceof Ftop10)) {
 			return false;
 		}
-		
+
 		Ftop10 fig = (Ftop10) obj;
-		
-		return super.equals((Figurita)obj) && _paisSede.equals(fig.get_paisSede()) && _balon.equals(fig.get_balon()); 
-		
+
+		return super.equals((Figurita) obj) && _paisSede.equals(fig.get_paisSede()) && _balon.equals(fig.get_balon());
+
 	}
 
 }

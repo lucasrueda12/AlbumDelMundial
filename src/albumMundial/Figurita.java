@@ -14,24 +14,24 @@ public class Figurita {
 		_nombrePais = nombrePais;
 		set_id(hashCode());
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("%s - %d", _nombrePais, _numJugador);
+		return String.format("%s - Jugador: %d", _nombrePais, _numJugador);
 	}
-	
-	public void set_id(int x) {
-		_id = x;
+
+	public void set_id(int id) {
+		_id = id;
 	}
+
 	public int get_id() {
 		return _id;
 	}
-	
-	public int get_numJugador(){
+
+	public int get_numJugador() {
 		return _numJugador;
 	}
-	
-	
+
 	public String get_tipo() {
 		return _tipo;
 	}
@@ -42,21 +42,22 @@ public class Figurita {
 
 	@Override
 	public int hashCode() {
-		return ( _nombrePais.length() + _numJugador + _tipo.length())* 7 + _numJugador;
+		return (_nombrePais.length() + _numJugador + _tipo.length()) * 7 + _numJugador;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null) {
+		if (obj == null) {
 			return false;
 		}
-		if(!(obj instanceof Figurita)) {
+		if (!(obj instanceof Figurita)) {
 			return false;
 		}
-		
+
 		Figurita fig = (Figurita) obj;
-		
-		return _numJugador == fig.get_numJugador() && _nombrePais.equals(fig.get_nombrePais()) && _tipo.equals(fig.get_tipo());
+
+		return _numJugador == fig.get_numJugador() && _nombrePais.equals(fig.get_nombrePais())
+				&& _tipo.equals(fig.get_tipo());
 	}
-	
+
 }
