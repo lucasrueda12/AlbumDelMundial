@@ -22,14 +22,17 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 	@Override 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
-		sb.append("Participantes: ");
+		int count = 0;
+		sb.append("Cantidad de Participantes: ");
+		sb.append(_participantes.size());
 		sb.append("\n");
-		for(Participante participante : _participantes.values()) {
-			
-			sb.append(participante);
-			sb.append("\n");
+		sb.append("Cantidad de Ganadores: ");
+		for (Participante  p : _participantes.values()) {
+			if (p.albumCompleto()) {
+				count++;
+			}
 		}
+		sb.append(count);
 		
 		return sb.toString();
 	}
