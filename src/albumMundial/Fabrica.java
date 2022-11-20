@@ -102,8 +102,8 @@ public class Fabrica {
 
 		for (int i = 0; i < cantFigus; i++) {
 			int numJugador = random.nextInt(12); // asigna un numero de jugador random
-			String paisSede = listadoDeMundialesTop10[random.nextInt(listadoDeMundialesTop10.length)]; 
-			String nombrePais = balonYPaisPorMundialTop10.get(paisSede)[random.nextInt(2)]; 
+			String paisSede = listadoDeMundialesTop10[random.nextInt(listadoDeMundialesTop10.length)]; //asigna un paisSede aleatorio
+			String nombrePais = balonYPaisPorMundialTop10.get(paisSede)[random.nextInt(2)]; //asigna un pais aleatorio según el paisSede
 			String balon;
 
 			if (nombrePais.equals(balonYPaisPorMundialTop10.get(paisSede)[0])) { 
@@ -115,7 +115,7 @@ public class Fabrica {
 
 			Ftop10 figurita = new Ftop10(nombrePais, numJugador, paisSede, balon); // Se crea la figurita con todos los
 																					// datos random.
-
+			
 			sobreTop10.add(figurita);
 		}
 

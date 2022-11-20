@@ -130,52 +130,22 @@ public class Participante {
 	}
 
 	public boolean albumCompleto() {
-		return _album.estaCompletoAlbum(); // le pregunta a album si esta completo
+		return _album.estaCompletoAlbum(); 
 	}
 
 	public String darPremio() {
 		return _album.darPremio();
 	}
 
-//	public int traerID_figuritaRepetida() {
-//		// envia el id de alguna figurita repetida, si no hay manda -1
-//		if (_coleccionFiguritas.size() == 0) {
-//			return -1;
-//		}
-//
-//		for (Figurita figurita : _coleccionFiguritas) { // recorro la coleccion
-//			if(_album.sePegoFigurita(figurita)) { 
-//				return figurita.get_id();  // si la figurita ya fue pegada entonces es repetida
-//			}
-//			int cont = 0; // sino busco que tenga mas de una
-//			for (Figurita otraf : _coleccionFiguritas) {
-//				if (figurita.equals(otraf)) {
-//					cont++;
-//				}
-//			}
-//			if (cont > 1) { // si tiene mas de una es que esta repetida y la retorno
-//				return figurita.get_id();
-//			}
-//		}
-//		System.out.println(_coleccionFiguritas.get(0).get_id());
-//		return _coleccionFiguritas.get(0).get_id(); // no encontro ninguna repetida, retorno -1
-//	}
-
 	public int traerID_figuritaRepetida() {
 
 		if (_coleccionFiguritas.size() == 0) {
 			return -1;
 		}
-
-		for (Figurita figurita : _coleccionFiguritas) {
-
-			return figurita.get_id();
-		}
-
-		return -1;
-
+		
+		return _coleccionFiguritas.get(0).get_id();
 	}
-
+	
 	public boolean completoPais(String nombrePais) {
 		return _album.completoPais(nombrePais);
 	}

@@ -70,8 +70,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 		_participantes.put(participante.getDni(), participante);
 
-		return album.get_ID(); // Lo cambie a un count incremental porque pienso q el profe nos va a romper las
-								// pelotas si asociamos el dni con el album;
+		return album.get_ID(); 
 	}
 
 	@Override
@@ -104,8 +103,8 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		if (!_participantes.containsKey(dni)) {
 			throw new RuntimeException("No se encuentra registrado");
 
-		} else if (!_participantes.get(dni).getTipoAlbum().equals("Web")) { // cuidado con las mayusculas, para el tipo
-																			// de album
+		} else if (!_participantes.get(dni).getTipoAlbum().equals("Web")) { 
+			
 			throw new RuntimeException("El participante no tiene un Álbum Web");
 
 		} else if (!_participantes.get(dni).tieneCodigoDisponible()) {
@@ -196,14 +195,14 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 
 		for (Map.Entry<Integer, Participante> otroP : _participantes.entrySet()) {
 
-			if (!participante.equals(otroP.getValue())) { // Aca valide que sean dos participante diferentes, para que
+			if (!participante.equals(otroP.getValue())) { // Valida que sean dos participante diferentes, para que
 															// dentro del map no tome al mismo participante.
 
-				if (participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())) { // mismo album
+				if (participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())) { // Valida mismo album
 
-					int otroCod = buscarFiguritaRepetida(otroP.getKey()); // busca fig repetida
+					int otroCod = buscarFiguritaRepetida(otroP.getKey()); // busca figurita repetida
 
-					if (otroCod != -1 && !participante.poseeFigurita(otroCod)) {
+					if (otroCod != -1 && !participante.poseeFigurita(otroCod)) { //Verifica que los participantes no posean la misma figurita a intercambiar
 
 						Figurita otraFigurita = otroP.getValue().traerFigurita(otroCod);
 
@@ -222,7 +221,7 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
 	private boolean mismoOMenorValor(Figurita figurita, Figurita otraFigurita) {

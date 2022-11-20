@@ -15,9 +15,12 @@ public class Ftop10 extends Figurita {
 	}
 
 	@Override
-	public String toString() { // No sé si está bien este toString como agregue lo adicional. ¡¡
-		return super.toString() + String.format("%s - %d", _paisSede, _balon);
+	public String toString() { 
+		return super.toString() + "País sede: " + _paisSede + "\n"+ "Balón de: " +  _balon;
+		
 	}
+	
+	
 
 	@Override
 	public int hashCode() {
