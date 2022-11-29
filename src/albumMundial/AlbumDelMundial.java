@@ -193,34 +193,32 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 			return false;
 		}
 
-		for (Map.Entry<Integer, Participante> otroP : _participantes.entrySet()) {
+		for (Participante otroP : _participantes.values()) {
 
-			if (!participante.equals(otroP.getValue())) { // Valida que sean dos participante diferentes, para que
+			if (!participante.equals(otroP)) { // Valida que sean dos participante diferentes, para que
 															// dentro del map no tome al mismo participante.
 
-				if (participante.getTipoAlbum().equals(otroP.getValue().getTipoAlbum())) { // Valida mismo album
+				if (participante.getTipoAlbum().equals(otroP.getTipoAlbum())) { // Valida mismo album
 
-					int otroCod = buscarFiguritaRepetida(otroP.getKey()); // busca figurita repetida
+					int otroCod = buscarFiguritaRepetidaMismoOMenorValor(figurita, otroP); // busca figurita repetida del mismo valor entre toda la coleccion del participante.
 
 					if (otroCod != -1 && !participante.poseeFigurita(otroCod)) { //Verifica que los participantes no posean la misma figurita a intercambiar
 
-						Figurita otraFigurita = otroP.getValue().traerFigurita(otroCod);
+						Figurita otraFigurita = otroP.traerFigurita(otroCod);
 
 						// si una es top 10 y la otra es tradicional se intercambian si tienen el mismo
 						// valor
 
-						if (!figurita.equals(otraFigurita) && mismoOMenorValor(figurita, otraFigurita)) {
-
 							participante.intercambiar(figurita, otraFigurita);
 
-							otroP.getValue().intercambiar(otraFigurita, figurita);
+							otroP.intercambiar(otraFigurita, figurita);
 
 							return true;
 						}
 					}
 				}
 			}
-		}
+		
 		return false;
 	}
 
@@ -238,6 +236,25 @@ public class AlbumDelMundial implements IAlbumDelMundial {
 		}
 		return val1 >= val2;
 
+	}
+	
+	private int buscarFiguritaRepetidaMismoOMenorValor(Figurita figuritaACambiar, Participante participante) { 
+//	Este método se encarga de buscar una figurita dentro de la colección del participante 
+//		que contenga el mismo o un menor valor que la figurita llegada como parámetro.	
+		
+//		Sin embargo, este método es dinámico por ende, el test 10 varía su resultado dependiendo de las figuritas que se generan aleatoriamente.
+//		En algunos casos resulta ser el test fallido y en otros, resulta ser el test correcto sin ningún error.
+		
+		ArrayList <Figurita> figuritas = participante.get_coleccionFiguritas();
+		
+		for(Figurita figurita : figuritas) {
+			
+			if(mismoOMenorValor(figuritaACambiar, figurita) && !figurita.equals(figuritaACambiar)){ //Valida que las dos figuritas tengan un mismo o menor valor y que además sean diferentes.
+				return figurita.get_id();
+			}
+		}
+		return -1;
+		
 	}
 
 	@Override

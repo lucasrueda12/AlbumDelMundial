@@ -2,7 +2,7 @@ package albumMundial;
 
 import java.util.Map;
 
-public abstract class Album  {
+public abstract class Album{
 	private static int count;
 	private int _id;
 	private String _tipo;

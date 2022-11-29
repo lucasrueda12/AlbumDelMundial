@@ -8,7 +8,7 @@ public class Participante {
 
 	private Integer _dni;
 	private String _nombre;
-	private List<Figurita> _coleccionFiguritas;
+	private ArrayList<Figurita> _coleccionFiguritas;
 	private Album _album;
 
 	public Participante(Integer dni, String nombre, Album album) {
@@ -46,6 +46,10 @@ public class Participante {
 	
 	public int getDni() {
 		return _dni;
+	}
+	
+	public ArrayList <Figurita> get_coleccionFiguritas(){
+		return _coleccionFiguritas;
 	}
 
 	public void agregarSobreAColeccion(List<Figurita> sobre) {
